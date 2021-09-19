@@ -92,6 +92,31 @@ export default function UserRegistration() {
                                 />
                             </Grid>
 
+
+                               <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="phone"
+                  label="Phone Number"
+                  name="phone"
+                  autoComplete="phone"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="dob"
+                  label="Date of Birth"
+                  name="dob"
+                  autoComplete="dob"
+                />
+              </Grid>
+
+
                             <Grid item xs={12}>
                                 <TextField
                                     variant="outlined"

@@ -8,6 +8,7 @@ import {
 import Login from './components/Login';
 import UserRegistration from './components/UserRegistration';
 import VendorRegistration from './components/VendorRegistration';
+import Dashboard from './components/UserDashboard/Dashboard';
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                 <Route path="/login" component={Login} />
                  <Route path="/" exact component={UserRegistration} />
                 <Route path="/VendorRegistration" component={VendorRegistration} />
+                  <Route path="/UserDashboard" component={Dashboard} />
             </Switch>
         </Router>
 
