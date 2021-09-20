@@ -14,7 +14,7 @@ function Register() {
     const splitLocation = pathname.split("/");
   return (
     <div className="register-container">
-      <ul>
+      <ul className="ul-cont">
         {/* Checking the current path name using javascript ternary operator and if true adding active classname to it */}
         <li className={splitLocation[1] === "" ? "active" : ""}>
           <Link to="/">

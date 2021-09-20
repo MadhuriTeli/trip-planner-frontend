@@ -1,31 +1,27 @@
-import React from 'react';
-//import Register from './components/Register';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route
-} from "react-router-dom";
-import Login from './components/Login';
-import UserRegistration from './components/UserRegistration';
-import VendorRegistration from './components/VendorRegistration';
-import Dashboard from './components/UserDashboard/Dashboard';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import UserRegistration from "./components/UserRegistration";
+import VendorRegistration from "./components/VendorRegistration";
+import UserLogin from "./components/UserLogin";
+import VendorLogin from "./components/VendorLogin";
+import Dashboard from "./components/UserDashboard/Dashboard";
 
 function App() {
-    return (
-        <Router>
-            <Switch>
-                {/* <Route path="/" exact component={Register} /> */}
-                <Route path="/login" component={Login} />
-                 <Route path="/" exact component={UserRegistration} />
-                <Route path="/VendorRegistration" component={VendorRegistration} />
-                  <Route path="/UserDashboard" component={Dashboard} />
-            </Switch>
-        </Router>
+  return (
+    <Router>
+      <Switch>
+        <Route path="/" exact component={UserRegistration} />
+        <Route path="/VendorRegistration" component={VendorRegistration} />
+        <Route path="/VendorLogin" component={VendorLogin} />
+        <Route path="/UserLogin" component={UserLogin} />
+        <Route path="/UserDashboard" component={Dashboard} />
+      </Switch>
+    </Router>
 
-        // <div>
-        //     <Register />
-        // </div>
-    );
+    // <div>
+    //     <Register />
+    // </div>
+  );
 }
 
 export default App;

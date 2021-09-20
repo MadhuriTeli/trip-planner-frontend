@@ -182,7 +182,7 @@ export default function VendorRegistration() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/login" variant="body2">
+                <Link href="/VendorLogin" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
