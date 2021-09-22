@@ -9,7 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Register from "./Register";
 import Box from "@material-ui/core/Box";
-import { useHistory } from "react-router-dom";
+//import { useHistory } from "react-router-dom";
 import axios from "axios";
 //const baseURL = "http://localhost:8080/user/sign-up";
 function Copyright() {
@@ -44,56 +44,46 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UserRegistration() {
+export default function UserRegistration(props) {
   const classes = useStyles();
 
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
-  const [address, setAddress] = useState("");
-  const [mobno, setMobno] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const history = useHistory();
-  // async function UserSignUp() {
-  //   let item = { fname, lname, address, mobno, dob, email, password };
-  //   console.warn(item);
-  //   let result = await fetch("http://localhost:8080/user/sign-up", {
-  //     method: "POST",
-  //     body: JSON.stringify(item),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Accept: "application/json",
-  //     },
-  //   });
-  //   result = await result.json();
-  //   localStorage.setItem("user-info", JSON.stringify(result));
-  //   history.push("/userLogin");
-  // }
+  const [data, setdata] = useState({
+    fname: "",
+    lname: "",
+    address: "",
+    mobno: "",
+    email: "",
+    password: "",
+  });
+  const apiUrl = "http://localhost:8080/user/sign-up";
 
-  // const [post, setPost] = React.useState(null);
-  // React.useEffect(() => {
-  //   axios.get(`${baseURL}`).then((response) => {
-  //     setPost(response.data);
-  //   });
-  // }, []);
-
-  const Registerfun = () => {
-    axios
-      .post("http://localhost:8080/user/sign-up", {
-        fname: fname,
-        lname: lname,
-        address: address,
-        mobno: mobno,
-        email: email,
-        password: password,
-      })
-      .then((response) => {
-        // setPost(response.data);
-        localStorage.setItem("user-info", JSON.stringify(response.data));
-        history.push("/UserLogin");
-        console.log(response.data);
-      });
+  const Registration = (e) => {
+    e.preventDefault();
+    // debugger;
+    const data1 = {
+      fname: data.fname,
+      lname: data.lname,
+      address: data.address,
+      mobno: data.mobno,
+      email: data.email,
+      password: data.password,
+    };
+    axios.post(apiUrl, data1).then((result) => {
+      //  debugger;
+      console.log(result.data);
+      if (result.data.Status === "Invalid") alert("Invalid User");
+      else {
+        localStorage.setItem("user-info", JSON.stringify(result.data));
+        props.history.push("/UserLogin");
+      }
+    });
   };
+  const onChange = (e) => {
+    e.persist();
+    // debugger;
+    setdata({ ...data, [e.target.name]: e.target.value });
+  };
+
   return (
     <div>
       <Register />
@@ -101,7 +91,7 @@ export default function UserRegistration() {
         <CssBaseline />
         <div className={classes.paper}>
           <h1>User Registration</h1>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} onSubmit={Registration} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -113,8 +103,8 @@ export default function UserRegistration() {
                   id="fname"
                   label="First Name"
                   autoFocus
-                  value={fname}
-                  onChange={(e) => setFname(e.target.value)}
+                  onChange={onChange}
+                  value={data.fname}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -126,8 +116,8 @@ export default function UserRegistration() {
                   label="Last Name"
                   name="lname"
                   autoComplete="lname"
-                  value={lname}
-                  onChange={(e) => setLname(e.target.value)}
+                  value={data.lname}
+                  onChange={onChange}
                 />
               </Grid>
 
@@ -140,8 +130,8 @@ export default function UserRegistration() {
                   label="Address"
                   name="address"
                   autoComplete="address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
+                  value={data.address}
+                  onChange={onChange}
                 />
               </Grid>
 
@@ -154,8 +144,8 @@ export default function UserRegistration() {
                   label="Phone Number"
                   name="mobno"
                   autoComplete="phone"
-                  value={mobno}
-                  onChange={(e) => setMobno(e.target.value)}
+                  value={data.mobno}
+                  onChange={onChange}
                 />
               </Grid>
 
@@ -168,8 +158,8 @@ export default function UserRegistration() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={data.email}
+                  onChange={onChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -182,8 +172,8 @@ export default function UserRegistration() {
                   type="password"
                   id="password"
                   autoComplete="current-password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={data.password}
+                  onChange={onChange}
                 />
               </Grid>
             </Grid>
@@ -193,7 +183,6 @@ export default function UserRegistration() {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={Registerfun}
             >
               Register
             </Button>

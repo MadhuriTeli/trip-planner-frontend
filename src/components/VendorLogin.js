@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -44,8 +45,34 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function VendorLogin() {
+export default function VendorLogin(props) {
   const classes = useStyles();
+
+  const [vendor, setvendor] = useState({ email: "", password: "" });
+  const apiUrl = "http://localhost:8080/vendor/login-vendor";
+  const LoginFn = (e) => {
+    e.preventDefault();
+    // debugger;
+    const data = { email: vendor.email, password: vendor.password };
+    axios.post(apiUrl, data).then((result) => {
+      // debugger;
+      console.log(result.data);
+      const serializedState = JSON.stringify(result.data.vendor);
+      var a = localStorage.setItem("myData", serializedState);
+      console.log("A:", a);
+      const vendorDetails = result.data.vendor;
+      console.log(result.data.message);
+      console.log(result.data.status);
+      if (result.data.status === 200) props.history.push("/vendorDashboard");
+      else alert("Invalid vendor");
+    });
+  };
+
+  const onChange = (e) => {
+    e.persist();
+    //  debugger;
+    setvendor({ ...vendor, [e.target.name]: e.target.value });
+  };
 
   return (
     <div>
@@ -54,7 +81,7 @@ export default function VendorLogin() {
         <CssBaseline />
         <div className={classes.paper}>
           <h1>Vendor Log In</h1>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} onSubmit={LoginFn} noValidate>
             <TextField
               variant="outlined"
               margin="normal"
@@ -65,6 +92,8 @@ export default function VendorLogin() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={vendor.email}
+              onChange={onChange}
             />
             <TextField
               variant="outlined"
@@ -76,6 +105,8 @@ export default function VendorLogin() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={vendor.password}
+              onChange={onChange}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

@@ -10,7 +10,7 @@ import Container from "@material-ui/core/Container";
 // import { Link } from 'react-router-dom';
 import Box from "@material-ui/core/Box";
 import Register from "./Register";
-import { useHistory } from "react-router-dom";
+//import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 function Copyright() {
@@ -45,40 +45,73 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function VendorRegistration() {
+export default function VendorRegistration(props) {
   const classes = useStyles();
 
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
-  const [company_name, setCompany_name] = useState("");
-  const [address, setAddress] = useState("");
-  const [pincode, setPincode] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [mobno, setMobno] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const history = useHistory();
+  const [data, setdata] = useState({
+    fname: "",
+    lname: "",
+    company_name: "",
+    address: "",
+    pincode: "",
+    city: "",
+    state: "",
+    mobno: "",
+    email: "",
+    password: "",
+  });
+  const apiUrl = "http://localhost:8080/vendor/sign-up-vendor";
 
-  const Registerfun = () => {
-    axios
-      .post("http://localhost:8080/vendor/sign-up-vendor", {
-        fname: fname,
-        lname: lname,
-        company_name: company_name,
-        address: address,
-        pincode: pincode,
-        city: city,
-        state: state,
-        mobno: mobno,
-        email: email,
-        password: password,
-      })
-      .then((response) => {
-        localStorage.setItem("user-info", JSON.stringify(response.data));
-        history.push("/VendorLogin");
-        console.log(response.data);
-      });
+  // const Registerfun = () => {
+  //   axios
+  //     .post("http://localhost:8080/vendor/sign-up-vendor", {
+  //       fname: fname,
+  //       lname: lname,
+  //       company_name: company_name,
+  //       address: address,
+  //       pincode: pincode,
+  //       city: city,
+  //       state: state,
+  //       mobno: mobno,
+  //       email: email,
+  //       password: password,
+  //     })
+  //     .then((response) => {
+  //       localStorage.setItem("user-info", JSON.stringify(response.data));
+  //       history.push("/VendorLogin");
+  //       console.log(response.data);
+  //     });
+  // };
+
+  const Registration = (e) => {
+    e.preventDefault();
+    // debugger;
+    const data1 = {
+      fname: data.fname,
+      lname: data.lname,
+      company_name: data.company_name,
+      address: data.address,
+      pincode: data.pincode,
+      city: data.city,
+      state: data.state,
+      mobno: data.mobno,
+      email: data.email,
+      password: data.password,
+    };
+    axios.post(apiUrl, data1).then((result) => {
+      //  debugger;
+      console.log(result.data);
+      if (result.data.Status === "Invalid") alert("Invalid Vendor");
+      else {
+        localStorage.setItem("vendor-info", JSON.stringify(result.data));
+        props.history.push("/VendorLogin");
+      }
+    });
+  };
+  const onChange = (e) => {
+    e.persist();
+    // debugger;
+    setdata({ ...data, [e.target.name]: e.target.value });
   };
 
   return (
@@ -89,7 +122,7 @@ export default function VendorRegistration() {
         <CssBaseline />
         <div className={classes.paper}>
           <h1> Vendor Registration</h1>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} onSubmit={Registration} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -101,8 +134,8 @@ export default function VendorRegistration() {
                   id="fname"
                   label="First Name"
                   autoFocus
-                  value={fname}
-                  onChange={(e) => setFname(e.target.value)}
+                  onChange={onChange}
+                  value={data.fname}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -114,8 +147,8 @@ export default function VendorRegistration() {
                   label="Last Name"
                   name="lname"
                   autoComplete="lname"
-                  value={lname}
-                  onChange={(e) => setLname(e.target.value)}
+                  value={data.lname}
+                  onChange={onChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -127,8 +160,8 @@ export default function VendorRegistration() {
                   label="business Name"
                   name="company_name"
                   autoComplete="business"
-                  value={company_name}
-                  onChange={(e) => setCompany_name(e.target.value)}
+                  value={data.company_name}
+                  onChange={onChange}
                 />
               </Grid>
 
@@ -141,8 +174,8 @@ export default function VendorRegistration() {
                   label="Address"
                   name="address"
                   autoComplete="address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
+                  value={data.address}
+                  onChange={onChange}
                 />
               </Grid>
               <Grid item xs={12} sm={4}>
@@ -154,8 +187,8 @@ export default function VendorRegistration() {
                   label="Pin Code"
                   name="pincode"
                   autoComplete="pincode"
-                  value={pincode}
-                  onChange={(e) => setPincode(e.target.value)}
+                  value={data.pincode}
+                  onChange={onChange}
                 />
               </Grid>
               <Grid item xs={12} sm={4}>
@@ -168,8 +201,8 @@ export default function VendorRegistration() {
                   id="city"
                   label="City"
                   autoFocus
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
+                  value={data.city}
+                  onChange={onChange}
                 />
               </Grid>
 
@@ -182,8 +215,8 @@ export default function VendorRegistration() {
                   label="State"
                   name="state"
                   autoComplete="state"
-                  value={state}
-                  onChange={(e) => setState(e.target.value)}
+                  value={data.state}
+                  onChange={onChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -195,8 +228,8 @@ export default function VendorRegistration() {
                   label="Phone Number"
                   name="mobno"
                   autoComplete="phone"
-                  value={mobno}
-                  onChange={(e) => setMobno(e.target.value)}
+                  value={data.mobno}
+                  onChange={onChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -208,8 +241,8 @@ export default function VendorRegistration() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={data.email}
+                  onChange={onChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -222,8 +255,8 @@ export default function VendorRegistration() {
                   type="password"
                   id="password"
                   autoComplete="current-password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={data.password}
+                  onChange={onChange}
                 />
               </Grid>
             </Grid>
@@ -233,7 +266,6 @@ export default function VendorRegistration() {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={Registerfun}
             >
               Register
             </Button>

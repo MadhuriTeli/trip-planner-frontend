@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -43,8 +44,34 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UserLogin() {
+export default function UserLogin(props) {
   const classes = useStyles();
+
+  const [user, setuser] = useState({ email: "", password: "" });
+  const apiUrl = "http://localhost:8080/user/login";
+  const LoginFn = (e) => {
+    e.preventDefault();
+    // debugger;
+    const data = { email: user.email, password: user.password };
+    axios.post(apiUrl, data).then((result) => {
+      // debugger;
+      console.log(result.data);
+      const serializedState = JSON.stringify(result.data.user);
+      var a = localStorage.setItem("myData", serializedState);
+      console.log("A:", a);
+      const userDetails = result.data.user;
+      console.log(result.data.message);
+      console.log(result.data.status);
+      if (result.data.status === 200) props.history.push("/UserDashboard");
+      else alert("Invalid User");
+    });
+  };
+
+  const onChange = (e) => {
+    e.persist();
+    //  debugger;
+    setuser({ ...user, [e.target.name]: e.target.value });
+  };
 
   return (
     <div>
@@ -53,7 +80,7 @@ export default function UserLogin() {
         <CssBaseline />
         <div className={classes.paper}>
           <h1> User Log In</h1>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} onSubmit={LoginFn} noValidate>
             <TextField
               variant="outlined"
               margin="normal"
@@ -64,6 +91,8 @@ export default function UserLogin() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={user.email}
+              onChange={onChange}
             />
             <TextField
               variant="outlined"
@@ -75,6 +104,8 @@ export default function UserLogin() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={user.password}
+              onChange={onChange}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
