@@ -11,9 +11,6 @@ import Register from "./Register";
 import Box from "@material-ui/core/Box";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DatePicker from "@mui/lab/DatePicker";
 //const baseURL = "http://localhost:8080/user/sign-up";
 function Copyright() {
   return (
@@ -54,7 +51,6 @@ export default function UserRegistration() {
   const [lname, setLname] = useState("");
   const [address, setAddress] = useState("");
   const [mobno, setMobno] = useState("");
-  const [dob, setDob] = useState(new Date());
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
@@ -88,18 +84,16 @@ export default function UserRegistration() {
         lname: lname,
         address: address,
         mobno: mobno,
-        dob: dob,
         email: email,
         password: password,
       })
       .then((response) => {
         // setPost(response.data);
         localStorage.setItem("user-info", JSON.stringify(response.data));
-        history.push("/userLogin");
+        history.push("/UserLogin");
         console.log(response.data);
       });
   };
-  //if (!post) return "No post!";
   return (
     <div>
       <Register />
@@ -164,26 +158,8 @@ export default function UserRegistration() {
                   onChange={(e) => setMobno(e.target.value)}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DatePicker
-                    variant="outlined"
-                    required
-                    id="dob"
-                    label="Date of Birth"
-                    name="dob"
-                    type="date"
-                    autoComplete="dob"
-                    value={dob}
-                    onChange={(newValue) => setDob(newValue)}
-                    renderInput={(params) => (
-                      <TextField variant="outlined" {...params} />
-                    )}
-                  />
-                </LocalizationProvider>
-              </Grid>
 
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   variant="outlined"
                   required

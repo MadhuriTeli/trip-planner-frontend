@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -10,6 +10,9 @@ import Container from "@material-ui/core/Container";
 // import { Link } from 'react-router-dom';
 import Box from "@material-ui/core/Box";
 import Register from "./Register";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -45,6 +48,39 @@ const useStyles = makeStyles((theme) => ({
 export default function VendorRegistration() {
   const classes = useStyles();
 
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
+  const [company_name, setCompany_name] = useState("");
+  const [address, setAddress] = useState("");
+  const [pincode, setPincode] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [mobno, setMobno] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const history = useHistory();
+
+  const Registerfun = () => {
+    axios
+      .post("http://localhost:8080/vendor/sign-up-vendor", {
+        fname: fname,
+        lname: lname,
+        company_name: company_name,
+        address: address,
+        pincode: pincode,
+        city: city,
+        state: state,
+        mobno: mobno,
+        email: email,
+        password: password,
+      })
+      .then((response) => {
+        localStorage.setItem("user-info", JSON.stringify(response.data));
+        history.push("/VendorLogin");
+        console.log(response.data);
+      });
+  };
+
   return (
     <div>
       <Register />
@@ -58,13 +94,15 @@ export default function VendorRegistration() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="fname"
-                  name="firstName"
+                  name="fname"
                   variant="outlined"
                   required
                   fullWidth
-                  id="firstName"
+                  id="fname"
                   label="First Name"
                   autoFocus
+                  value={fname}
+                  onChange={(e) => setFname(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -72,10 +110,12 @@ export default function VendorRegistration() {
                   variant="outlined"
                   required
                   fullWidth
-                  id="lastName"
+                  id="lname"
                   label="Last Name"
-                  name="lastName"
+                  name="lname"
                   autoComplete="lname"
+                  value={lname}
+                  onChange={(e) => setLname(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -83,10 +123,12 @@ export default function VendorRegistration() {
                   variant="outlined"
                   required
                   fullWidth
-                  id="business"
+                  id="company_name"
                   label="business Name"
-                  name="business"
+                  name="company_name"
                   autoComplete="business"
+                  value={company_name}
+                  onChange={(e) => setCompany_name(e.target.value)}
                 />
               </Grid>
 
@@ -99,19 +141,8 @@ export default function VendorRegistration() {
                   label="Address"
                   name="address"
                   autoComplete="address"
-                />
-              </Grid>
-
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  autoComplete="city"
-                  name="city"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="city"
-                  label="City"
-                  autoFocus
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={4}>
@@ -123,8 +154,25 @@ export default function VendorRegistration() {
                   label="Pin Code"
                   name="pincode"
                   autoComplete="pincode"
+                  value={pincode}
+                  onChange={(e) => setPincode(e.target.value)}
                 />
               </Grid>
+              <Grid item xs={12} sm={4}>
+                <TextField
+                  autoComplete="city"
+                  name="city"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="city"
+                  label="City"
+                  autoFocus
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                />
+              </Grid>
+
               <Grid item xs={12} sm={4}>
                 <TextField
                   variant="outlined"
@@ -134,6 +182,8 @@ export default function VendorRegistration() {
                   label="State"
                   name="state"
                   autoComplete="state"
+                  value={state}
+                  onChange={(e) => setState(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -141,10 +191,12 @@ export default function VendorRegistration() {
                   variant="outlined"
                   required
                   fullWidth
-                  id="phone"
+                  id="mobno"
                   label="Phone Number"
-                  name="phone"
+                  name="mobno"
                   autoComplete="phone"
+                  value={mobno}
+                  onChange={(e) => setMobno(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -156,6 +208,8 @@ export default function VendorRegistration() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -168,6 +222,8 @@ export default function VendorRegistration() {
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </Grid>
             </Grid>
@@ -177,6 +233,7 @@ export default function VendorRegistration() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={Registerfun}
             >
               Register
             </Button>
