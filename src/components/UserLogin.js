@@ -59,7 +59,7 @@ export default function UserLogin(props) {
       const serializedState = JSON.stringify(result.data.user);
       var a = localStorage.setItem("myData", serializedState);
       console.log("A:", a);
-      const userDetails = result.data.user;
+      //const userDetails = result.data.user;
       console.log(result.data.message);
       console.log(result.data.status);
       if (result.data.status === 200) props.history.push("/UserDashboard");
