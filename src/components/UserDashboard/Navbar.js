@@ -3,7 +3,7 @@ import { FaBars } from "react-icons/fa";
 import { links, social } from "./data";
 import "./navbar.css";
 import logo from "../asset/excursion.png";
-
+import { NavLink } from "react-router-dom";
 const Navbar = () => {
   const [showLinks, setShowLinks] = useState(false);
   const linksContainerRef = useRef(null);
@@ -36,7 +36,13 @@ const Navbar = () => {
               const { id, url, text } = link;
               return (
                 <li key={id}>
-                  <a href={url}>{text}</a>
+                  <NavLink
+                    activeClassName="navbar__link--active"
+                    className="navbar__link"
+                    to={url}
+                  >
+                    {text}
+                  </NavLink>
                 </li>
               );
             })}

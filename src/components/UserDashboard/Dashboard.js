@@ -1,20 +1,31 @@
 import React, { useState, useEffect } from "react";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Link from "@mui/material/Link";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 
-const useStyles = () => ({
-  sidebar: {
-    display: "inline",
-    float: "left",
-  },
-  maincontent: {
-    display: "inline",
-    float: "left",
-  },
-});
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {"Copyright © "}
+      <Link color="inherit" href="https://material-ui.com/">
+        TripPlanner
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
+
+const mdTheme = createTheme();
 
 function DashboardContent() {
-  const classes = useStyles();
   const [user, setuser] = useState({ email: "", password: "" });
   useEffect(() => {
     var a = localStorage.getItem("myData");
@@ -25,22 +36,62 @@ function DashboardContent() {
   }, [user.fname]);
 
   return (
-    <div>
+    <ThemeProvider theme={mdTheme}>
       <Navbar />
-      <Sidebar className={classes.sidebar} />
-      <div className={classes.maincontent}>
-        <h1>Hello</h1>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-      </div>
-    </div>
+      <Box sx={{ display: "flex" }}>
+        <Sidebar />
+        <Box
+          component="main"
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === "light"
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            flexGrow: 1,
+            height: "100vh",
+            // overflow: "auto",
+          }}
+        >
+          <Toolbar />
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Grid container spacing={3}>
+              {/* Chart */}
+              <Grid item xs={12} md={8} lg={9}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    height: 240,
+                  }}
+                >
+                  {/* <Chart /> */}
+                </Paper>
+              </Grid>
+              <h1>Welcome :{user.fname}</h1>
+              {/* Recent Deposits */}
+              <Grid item xs={12} md={4} lg={3}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    height: 240,
+                  }}
+                ></Paper>
+              </Grid>
+              {/* Recent Orders */}
+              <Grid item xs={12}>
+                <Paper
+                  sx={{ p: 2, display: "flex", flexDirection: "column" }}
+                ></Paper>
+              </Grid>
+            </Grid>
+            <Copyright sx={{ pt: 4 }} />
+          </Container>
+        </Box>
+      </Box>
+    </ThemeProvider>
   );
 }
 

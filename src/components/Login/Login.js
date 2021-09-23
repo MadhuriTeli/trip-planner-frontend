@@ -1,5 +1,5 @@
 import React from "react";
-import "./Register.css";
+import "../Registrations/Register.css";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 function Login() {

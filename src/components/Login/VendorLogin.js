@@ -60,7 +60,7 @@ export default function VendorLogin(props) {
       const serializedState = JSON.stringify(result.data.vendor);
       var a = localStorage.setItem("myData", serializedState);
       console.log("A:", a);
-      const vendorDetails = result.data.vendor;
+      // const vendorDetails = result.data.vendor;
       console.log(result.data.message);
       console.log(result.data.status);
       if (result.data.status === 200) props.history.push("/vendorDashboard");

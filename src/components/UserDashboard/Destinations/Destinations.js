@@ -1,0 +1,144 @@
+import React, { Component } from "react";
+import axios from "axios";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
+import Navbar from "../Navbar";
+import Sidebar from "../Sidebar";
+import Destination from "./Destination";
+import SearchIcon from "@mui/icons-material/Search";
+import InputBase from "@mui/material/InputBase";
+import { styled, alpha } from "@mui/material/styles";
+const API_URL = "http://localhost:8080";
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {"Copyright © "}
+      <Link color="inherit" href="https://material-ui.com/">
+        TripPlanner
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: "100%",
+  borderBottom: "1px solid",
+  marginBottom: 2,
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(3),
+    width: "auto",
+  },
+}));
+
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
+    },
+  },
+}));
+
+const mdTheme = createTheme();
+
+class Destinations extends Component {
+  state = {
+    destinations: [],
+  };
+
+  componentDidMount() {
+    const url = `${API_URL}/destinations`;
+    axios
+      .get(url)
+      .then((response) => response.data)
+      .then((data) => {
+        this.setState({ destinations: data });
+        console.log(this.state.destinations);
+      });
+  }
+
+  render() {
+    return (
+      <ThemeProvider theme={mdTheme}>
+        <Navbar />
+        <Box sx={{ display: "flex" }}>
+          <Sidebar />
+          <Box
+            sx={{
+              backgroundColor: (theme) =>
+                theme.palette.mode === "light"
+                  ? theme.palette.grey[100]
+                  : theme.palette.grey[900],
+              //  flexGrow: 1,
+              //height: "100vh",
+              // overflow: "auto",
+            }}
+          >
+            <h3 className="page-header">Destionations</h3>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search places,city,.."
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
+            <Container sx={{ py: 1 }}>
+              {/* End hero unit */}
+              <Grid container spacing={3}>
+                {this.state.destinations.map((item, index) => (
+                  <Grid item key={index} md={3}>
+                    <div>
+                      <Destination
+                        title={item.title}
+                        image={item.image}
+                        description={item.description}
+                        address={item.address}
+                        city={item.city}
+                        state={item.state}
+                        visiting_fee={item.visiting_fee}
+                        visiting_hours={item.visiting_hours}
+                      />
+                    </div>
+                  </Grid>
+                ))}
+              </Grid>
+            </Container>
+            <Copyright sx={{ pt: 4 }} />
+          </Box>
+        </Box>
+      </ThemeProvider>
+    );
+  }
+}
+
+export default Destinations;
