@@ -62,8 +62,10 @@ class Product extends React.Component {
                       : this.props.address
                   }`}
                 </Typography>
-                <Typography>{this.props.visiting_hours}</Typography>
-                <Typography>{this.props.visiting_fee}</Typography>
+                <Typography>{this.props.contact_no}</Typography>
+                <Typography>{this.props.website}</Typography>
+                <Typography>{this.props.price}</Typography>
+                <Typography>{this.props.star}</Typography>
               </CardContent>
               <CardActions>
                 <Button size="small">View</Button>

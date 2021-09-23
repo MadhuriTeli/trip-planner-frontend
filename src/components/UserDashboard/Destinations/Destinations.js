@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -72,22 +72,25 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const mdTheme = createTheme();
 
-class Destinations extends Component {
-  state = {
-    destinations: [],
-    // input: "",
-  };
+const Destionations = () => {
+  // state = {
+  //   destinations: [],
+  //   // input: "",
+  // };
 
-  componentDidMount() {
-    const url = `${API_URL}/destinations`;
-    axios
-      .get(url)
-      .then((response) => response.data)
-      .then((data) => {
-        this.setState({ destinations: data });
-        console.log(this.state.destinations);
-      });
-  }
+  const [allData, setAllData] = useState([]);
+  const [filteredData, setFilteredData] = useState(allData);
+
+  // componentDidMount() {
+  //   const url = `${API_URL}/destinations`;
+  //   axios
+  //     .get(url)
+  //     .then((response) => response.data)
+  //     .then((data) => {
+  //       this.setState({ destinations: data });
+  //       console.log(this.state.destinations);
+  //     });
+  // }
 
   // onChangeHandler(e) {
   //   this.setState({
@@ -95,67 +98,91 @@ class Destinations extends Component {
   //   });
   // }
 
-  render() {
-    // const list = this.state.destinations
-    //   .filter((d) => this.state.input === "" || d.includes(this.state.input))
-    //   .map((d, index) => <li key={index}>{d}</li>);
+  useEffect(() => {
+    const url = `${API_URL}/destinations`;
+    axios(url)
+      .then((response) => {
+        console.log(response.data);
+        setAllData(response.data);
+        setFilteredData(response.data);
+      })
+      .catch((error) => {
+        console.log("Error getting fake data: " + error);
+      });
+  }, []);
 
-    return (
-      <ThemeProvider theme={mdTheme}>
-        <Navbar />
-        <Box sx={{ display: "flex" }}>
-          <Sidebar />
-          <Box
-            sx={{
-              backgroundColor: (theme) =>
-                theme.palette.mode === "light"
-                  ? theme.palette.grey[100]
-                  : theme.palette.grey[900],
-              //  flexGrow: 1,
-              //height: "100vh",
-              // overflow: "auto",
-            }}
-          >
-            <h2 style={{ marginLeft: "20px" }}>Destionations</h2>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search places,city,.."
-                inputProps={{ "aria-label": "search" }}
-                // value={this.state.input}
-                // type="text"
-                // onChange={this.onChangeHandler.bind(this)}
-              />
-            </Search>
-            <Container sx={{ py: 1 }}>
-              {/* End hero unit */}
-              <Grid container spacing={3}>
-                {this.state.destinations.map((item, index) => (
-                  <Grid item key={index} md={3}>
-                    <div>
-                      <Destination
-                        title={item.title}
-                        image={item.image}
-                        description={item.description}
-                        address={item.address}
-                        city={item.city}
-                        state={item.state}
-                        visiting_fee={item.visiting_fee}
-                        visiting_hours={item.visiting_hours}
-                      />
-                    </div>
-                  </Grid>
-                ))}
-              </Grid>
-            </Container>
-            <Copyright sx={{ pt: 4 }} />
-          </Box>
+  const handleSearch = (event) => {
+    let value = event.target.value.toLowerCase();
+    let result = [];
+    console.log(value);
+    result = allData.filter((data) => {
+      console.log(data.city);
+      return data.title.search(value) !== -1;
+    });
+    console.log(result);
+    setFilteredData(result);
+  };
+
+  // const list = this.state.destinations
+  //   .filter((d) => this.state.input === "" || d.includes(this.state.input))
+  //   .map((d, index) => <li key={index}>{d}</li>);
+
+  return (
+    <ThemeProvider theme={mdTheme}>
+      <Navbar />
+      <Box sx={{ display: "flex" }}>
+        <Sidebar />
+        <Box
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === "light"
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            //  flexGrow: 1,
+            //height: "100vh",
+            // overflow: "auto",
+          }}
+        >
+          <h2 style={{ marginLeft: "20px" }}>Destionations</h2>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search places,city,.."
+              inputProps={{ "aria-label": "search" }}
+              // value={this.state.input}
+              // type="text"
+              // onChange={this.onChangeHandler.bind(this)}
+              type="text"
+              onChange={(event) => handleSearch(event)}
+            />
+          </Search>
+          <Container sx={{ py: 1 }}>
+            {/* End hero unit */}
+            <Grid container spacing={3}>
+              {filteredData.map((item, index) => (
+                <Grid item key={index} md={3}>
+                  <div>
+                    <Destination
+                      title={item.title}
+                      image={item.image}
+                      description={item.description}
+                      address={item.address}
+                      city={item.city}
+                      state={item.state}
+                      visiting_fee={item.visiting_fee}
+                      visiting_hours={item.visiting_hours}
+                    />
+                  </div>
+                </Grid>
+              ))}
+            </Grid>
+          </Container>
+          <Copyright sx={{ pt: 4 }} />
         </Box>
-      </ThemeProvider>
-    );
-  }
-}
-
-export default Destinations;
+      </Box>
+    </ThemeProvider>
+  );
+};
+export default Destionations;
