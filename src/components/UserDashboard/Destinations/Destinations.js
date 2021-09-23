@@ -12,7 +12,9 @@ import Destination from "./Destination";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import { styled, alpha } from "@mui/material/styles";
+
 const API_URL = "http://localhost:8080";
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -25,6 +27,7 @@ function Copyright() {
     </Typography>
   );
 }
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -72,6 +75,7 @@ const mdTheme = createTheme();
 class Destinations extends Component {
   state = {
     destinations: [],
+    // input: "",
   };
 
   componentDidMount() {
@@ -85,7 +89,17 @@ class Destinations extends Component {
       });
   }
 
+  // onChangeHandler(e) {
+  //   this.setState({
+  //     input: e.target.value,
+  //   });
+  // }
+
   render() {
+    // const list = this.state.destinations
+    //   .filter((d) => this.state.input === "" || d.includes(this.state.input))
+    //   .map((d, index) => <li key={index}>{d}</li>);
+
     return (
       <ThemeProvider theme={mdTheme}>
         <Navbar />
@@ -102,7 +116,7 @@ class Destinations extends Component {
               // overflow: "auto",
             }}
           >
-            <h3 className="page-header">Destionations</h3>
+            <h2 style={{ marginLeft: "20px" }}>Destionations</h2>
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />
@@ -110,6 +124,9 @@ class Destinations extends Component {
               <StyledInputBase
                 placeholder="Search places,city,.."
                 inputProps={{ "aria-label": "search" }}
+                // value={this.state.input}
+                // type="text"
+                // onChange={this.onChangeHandler.bind(this)}
               />
             </Search>
             <Container sx={{ py: 1 }}>

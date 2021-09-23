@@ -10,45 +10,6 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 class Product extends React.Component {
-  constructor(props) {
-    super(props);
-    //Initializing state by taking value from property
-    this.state = { likes: props.likes };
-    this.handler = this.handler.bind(this); /// Event Binding association
-  }
-
-  //callback function
-  handler(data) {
-    //data sent by child  will be set to state of parent
-    //change the state of Product Likes
-    this.setState({ likes: data });
-  }
-
-  //   render() {
-  //     return (
-  //       <div>
-  //         <h3>Places Details</h3>
-  //         <hr />
-  //         <p>Title:{this.props.title}</p>
-  //         <img
-  //           src={this.props.image}
-  //           width="100"
-  //           height="100"
-  //           alt={this.props.title}
-  //         />
-
-  //         <p>Description:{this.props.description}</p>
-  //         <p>Address:{this.props.address}</p>
-  //         <p>City:{this.props.city} </p>
-  //         <p>State:{this.props.state} </p>
-  //         <p>Visiting Fee:{this.props.visiting_fee}</p>
-  //         <p>Visiting Hours:{this.props.visiting_hours}</p>
-  //         <br />
-  //         <button>Add to Saved Destionatin</button>
-  //       </div>
-  //     );
-  //   }
-
   render() {
     const theme = createTheme();
     return (
