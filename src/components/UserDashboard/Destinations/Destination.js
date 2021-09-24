@@ -9,7 +9,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-class Product extends React.Component {
+class Destination extends React.Component {
   render() {
     const theme = createTheme();
     return (
@@ -76,4 +76,4 @@ class Product extends React.Component {
     );
   }
 }
-export default Product;
+export default Destination;

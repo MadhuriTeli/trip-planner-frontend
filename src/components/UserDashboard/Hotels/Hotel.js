@@ -8,8 +8,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-class Product extends React.Component {
+import { Link } from "react-router-dom";
+class Hotel extends React.Component {
   render() {
     const theme = createTheme();
     return (
@@ -17,65 +17,67 @@ class Product extends React.Component {
         <CssBaseline />
         <Grid container spacing={3}>
           <Grid item>
-            <Card
-              sx={{
-                height: "100%",
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              {" "}
-              <CardContent>
-                <Typography gutterBottom variant="h6" component="h2">
-                  {`${
-                    this.props.title.length > 10
-                      ? this.props.title.substring(0, 15) + "..."
-                      : this.props.title
-                  }`}
-                </Typography>
-                <Typography>{this.props.city}</Typography>
-              </CardContent>
-              <CardMedia
-                component="img"
-                sx={
-                  {
-                    // 16:9
-                    // pt: "56.25%",
+            <Link to={`/hotels/${this.props.id}`} className="link">
+              <Card
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                {" "}
+                <CardContent>
+                  <Typography gutterBottom variant="h6" component="h2">
+                    {`${
+                      this.props.title.length > 10
+                        ? this.props.title.substring(0, 15) + "..."
+                        : this.props.title
+                    }`}
+                  </Typography>
+                  <Typography>{this.props.city}</Typography>
+                </CardContent>
+                <CardMedia
+                  component="img"
+                  sx={
+                    {
+                      // 16:9
+                      // pt: "56.25%",
+                    }
                   }
-                }
-                image={this.props.image}
-                alt={this.props.title}
-              />
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Typography>
-                  {`${
-                    this.props.description.length > 20
-                      ? this.props.description.substring(0, 20) + "..."
-                      : this.props.description
-                  }`}
-                </Typography>
-                <Typography>
-                  {" "}
-                  {`${
-                    this.props.address.length > 25
-                      ? this.props.address.substring(0, 25) + "..."
-                      : this.props.address
-                  }`}
-                </Typography>
-                <Typography>{this.props.contact_no}</Typography>
-                <Typography>{this.props.website}</Typography>
-                <Typography>{this.props.price}</Typography>
-                <Typography>{this.props.star}</Typography>
-              </CardContent>
-              <CardActions>
-                <Button size="small">View</Button>
-                <Button size="small">Add</Button>
-              </CardActions>
-            </Card>
+                  image={this.props.image}
+                  alt={this.props.title}
+                />
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography>
+                    {`${
+                      this.props.description.length > 20
+                        ? this.props.description.substring(0, 20) + "..."
+                        : this.props.description
+                    }`}
+                  </Typography>
+                  <Typography>
+                    {" "}
+                    {`${
+                      this.props.address.length > 25
+                        ? this.props.address.substring(0, 25) + "..."
+                        : this.props.address
+                    }`}
+                  </Typography>
+                  <Typography>{this.props.contact_no}</Typography>
+                  <Typography>{this.props.website}</Typography>
+                  <Typography>{this.props.price}</Typography>
+                  <Typography>{this.props.star}</Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="small">View</Button>
+                  <Button size="small">Add</Button>
+                </CardActions>
+              </Card>
+            </Link>
           </Grid>
         </Grid>
       </ThemeProvider>
     );
   }
 }
-export default Product;
+export default Hotel;

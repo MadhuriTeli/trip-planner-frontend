@@ -132,6 +132,7 @@ const Hotels = () => {
                 <Grid item key={index} md={3}>
                   <div>
                     <Hotel
+                      id={item.id}
                       title={item.title}
                       image={item.image}
                       description={item.description}
