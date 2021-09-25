@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -8,7 +9,28 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+//import { useHistory } from "react-router-dom";
 
+function addDestination(id) {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  // let history = useHistory();
+  const user = JSON.parse(localStorage.getItem("myData"));
+  console.log(id, user.id);
+
+  const apiUrl = "http://localhost:8080/destinations/add";
+
+  // debugger;
+  const data = { userId: user.id, destId: id };
+  axios.post(apiUrl, data).then((result) => {
+    // debugger;
+    console.log(result.data);
+    //const userDetails = result.data.user;
+    console.log(result.data.message);
+    console.log(result.data.status);
+    if (result.data.status === 201) alert(result.data.message);
+    else alert("Something went wrong!!");
+  });
+}
 class Destination extends React.Component {
   render() {
     const theme = createTheme();
@@ -67,7 +89,12 @@ class Destination extends React.Component {
               </CardContent>
               <CardActions>
                 <Button size="small">View</Button>
-                <Button size="small">Add</Button>
+                <Button
+                  size="small"
+                  onClick={() => addDestination(this.props.id)}
+                >
+                  Add
+                </Button>
               </CardActions>
             </Card>
           </Grid>

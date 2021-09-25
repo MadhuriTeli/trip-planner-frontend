@@ -165,6 +165,7 @@ const Destionations = () => {
                 <Grid item key={index} md={3}>
                   <div>
                     <Destination
+                      id={item.id}
                       title={item.title}
                       image={item.image}
                       description={item.description}
