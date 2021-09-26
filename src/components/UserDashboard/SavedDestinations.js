@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
 import Navbar from "../UserDashboard/Navbar";
 import Sidebar from "../UserDashboard/Sidebar";
 import Container from "@mui/material/Container";
@@ -44,7 +42,7 @@ const SavedDestinations = () => {
         >
           <h2 style={{ marginLeft: "20px" }}>Saved Destinations</h2>
           <Container sx={{ py: 1 }}>
-            <Grid container spacing={4}>
+            <Grid container spacing={2}>
               {repo.map((item, index) => (
                 <SavedDest dest={item} key={index} />
               ))}

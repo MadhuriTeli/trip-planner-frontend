@@ -10,12 +10,13 @@ import Grid from "@mui/material/Grid";
 function SavedDest(props) {
   const { dest } = props;
   console.log(dest);
-  const [readMore, setReadMore] = useState(true);
+  const [readMore, setReadMore] = useState(false);
+  const [readMoreAddress, setReadMoreAddress] = useState(false);
   const theme = createTheme();
   return (
     <ThemeProvider theme={theme}>
       <Grid item md={6}>
-        <Card style={{ marginBottom: "20px" }} sx={{ display: "flex" }}>
+        <Card sx={{ display: "flex" }}>
           <CardContent sx={{ flex: 1 }}>
             <Typography component="h2" variant="h5">
               {dest.title}
@@ -27,20 +28,30 @@ function SavedDest(props) {
               <p>
                 {readMore
                   ? dest.description
-                  : `${dest.description.substring(0, 40)}...
+                  : `${dest.description.substring(0, 30)}...
         `}
-                <Typography
+                <span
                   variant="subtitle1"
-                  color="primary"
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: "pointer", color: "#1976d2" }}
                   onClick={() => setReadMore(!readMore)}
                 >
                   {readMore ? "show less" : "read more"}
-                </Typography>
+                </span>
               </p>{" "}
               <Typography>
                 <b>Address : </b>
-                {dest.address}
+
+                {readMoreAddress
+                  ? dest.address + " " + dest.state
+                  : `${dest.address.substring(0, 20)}...
+        `}
+                <span
+                  variant="subtitle1"
+                  style={{ cursor: "pointer", color: "#1976d2" }}
+                  onClick={() => setReadMoreAddress(!readMoreAddress)}
+                >
+                  {readMoreAddress ? "show less" : "read more"}
+                </span>
               </Typography>
               <Typography>
                 <b>Visiting Hours: </b>
