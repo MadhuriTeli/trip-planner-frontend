@@ -31,9 +31,12 @@ function addDestination(id) {
     else alert("Something went wrong!!");
   });
 }
+//const [readMore, setReadMore] = useState(true);
+
 class Destination extends React.Component {
   render() {
     const theme = createTheme();
+
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
@@ -46,14 +49,14 @@ class Destination extends React.Component {
                 flexDirection: "column",
               }}
             >
-              {" "}
               <CardContent>
                 <Typography gutterBottom variant="h6" component="h2">
                   {`${
-                    this.props.title.length > 10
-                      ? this.props.title.substring(0, 15) + "..."
+                    this.props.title.length > 25
+                      ? this.props.title.substring(0, 30) + "..."
                       : this.props.title
                   }`}
+                  {/* {this.props.title} */}
                 </Typography>
                 <Typography>{this.props.city}</Typography>
               </CardContent>

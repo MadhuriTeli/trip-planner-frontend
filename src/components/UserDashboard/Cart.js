@@ -7,19 +7,8 @@ import Link from "@mui/material/Link";
 import Navbar from "../UserDashboard/Navbar";
 import Sidebar from "../UserDashboard/Sidebar";
 
+import Copyright from "../pages/Footer";
 import Container from "@mui/material/Container";
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        TripPlanner
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const mdTheme = createTheme();
 
