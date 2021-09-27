@@ -25,6 +25,7 @@ const SavedDestinations = () => {
       setRepo(myRepo);
     });
   };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => getRepo(), []);
   //const [readMore, setReadMore] = useState(true);
   return (
@@ -42,11 +43,17 @@ const SavedDestinations = () => {
         >
           <h2 style={{ marginLeft: "20px" }}>Saved Destinations</h2>
           <Container sx={{ py: 1 }}>
-            <Grid container spacing={2}>
-              {repo.map((item, index) => (
-                <SavedDest dest={item} key={index} />
-              ))}
-            </Grid>
+            {repo.length > 0 ? (
+              <Grid container spacing={2}>
+                {repo.map((item, index) => (
+                  <SavedDest dest={item} key={index} />
+                ))}
+              </Grid>
+            ) : (
+              <Grid container spacing={2} md={12}>
+                No Records Available..!
+              </Grid>
+            )}
           </Container>
           <Copyright sx={{ pt: 4 }} />
         </Box>

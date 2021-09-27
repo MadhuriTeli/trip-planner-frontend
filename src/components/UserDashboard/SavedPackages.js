@@ -1,9 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
 import Navbar from "../UserDashboard/Navbar";
 import Sidebar from "../UserDashboard/Sidebar";
 import Container from "@mui/material/Container";

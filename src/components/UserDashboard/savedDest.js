@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
+import CardActions from "@mui/material/CardActions";
+import Button from "@mui/material/Button";
 
 function SavedDest(props) {
   const { dest } = props;
@@ -63,12 +64,9 @@ function SavedDest(props) {
               </Typography>
             </Typography>
 
-            <button
-              className="delete-btn"
-              //   onClick={() => removeTour(id)}
-            >
-              Not Interested
-            </button>
+            <CardActions>
+              <Button size="small">Not Interested</Button>
+            </CardActions>
           </CardContent>
           <CardMedia
             component="img"

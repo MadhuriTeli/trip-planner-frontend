@@ -10,33 +10,60 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 //import { useHistory } from "react-router-dom";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
-function addDestination(id) {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  // let history = useHistory();
-  const user = JSON.parse(localStorage.getItem("myData"));
-  console.log(id, user.id);
-
-  const apiUrl = "http://localhost:8080/destinations/add";
-
-  // debugger;
-  const data = { userId: user.id, destId: id };
-  axios.post(apiUrl, data).then((result) => {
-    // debugger;
-    console.log(result.data);
-    //const userDetails = result.data.user;
-    console.log(result.data.message);
-    console.log(result.data.status);
-    if (result.data.status === 201) alert(result.data.message);
-    else alert("Something went wrong!!");
-  });
-}
-
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 function Destination(props) {
   const [readMore, setReadMore] = useState(false);
   const [readMoreAddress, setReadMoreAddress] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [openError, setOpenError] = React.useState(false);
+  function setAlert() {
+    setOpen(true);
+  }
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  function setAlertError() {
+    setOpenError(true);
+  }
+  const handleCloseError = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenError(false);
+  };
   const theme = createTheme();
   const { dest } = props;
+
+  function addDestination(id) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    // let history = useHistory();
+    const user = JSON.parse(localStorage.getItem("myData"));
+    console.log(id, user.id);
+
+    const apiUrl = "http://localhost:8080/destinations/add";
+
+    // debugger;
+    const data = { userId: user.id, destId: id };
+    axios.post(apiUrl, data).then((result) => {
+      // debugger;
+      if (result.data.status === 201) {
+        console.log(result.data.message);
+        setAlert();
+      } else {
+        setAlertError();
+      }
+    });
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -123,7 +150,25 @@ function Destination(props) {
             </CardActions>
           </Card>
         </Grid>
-      </Grid>
+      </Grid>{" "}
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          Destination added to saved Destinations List..!!!
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={openError}
+        autoHideDuration={6000}
+        onClose={handleCloseError}
+      >
+        <Alert
+          onClose={handleCloseError}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Error occurred while adding Destination to Saved Destinations List !!!
+        </Alert>
+      </Snackbar>
     </ThemeProvider>
   );
 }

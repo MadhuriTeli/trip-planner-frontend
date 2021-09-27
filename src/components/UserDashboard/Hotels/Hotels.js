@@ -115,20 +115,21 @@ const Hotels = () => {
             {/* End hero unit */}
             <Grid container spacing={3}>
               {filteredData.map((item, index) => (
-                <Grid item key={index} md={3}>
+                <Grid item key={index} md={4}>
                   <div>
                     <Hotel
-                      id={item.id}
-                      title={item.title}
-                      image={item.image}
-                      description={item.description}
-                      address={item.address}
-                      city={item.city}
-                      state={item.state}
-                      contact_no={item.contact_no}
-                      website={item.website}
-                      price={item.price}
-                      star={item.star}
+                      hotel={item}
+                      // id={item.id}
+                      // title={item.title}
+                      // image={item.image}
+                      // description={item.description}
+                      // address={item.address}
+                      // city={item.city}
+                      // state={item.state}
+                      // contact_no={item.contact_no}
+                      // website={item.website}
+                      // price={item.price}
+                      // star={item.star}
                     />
                   </div>
                 </Grid>
