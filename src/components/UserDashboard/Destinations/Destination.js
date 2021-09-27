@@ -79,19 +79,17 @@ function Destination(props) {
                     : dest.description
                 }`} */}
 
-                <p>
-                  {readMore
-                    ? dest.description
-                    : `${dest.description.substring(0, 20)}...
+                {readMore
+                  ? dest.description
+                  : `${dest.description.substring(0, 20)}...
         `}
-                  <span
-                    variant="subtitle1"
-                    style={{ cursor: "pointer", color: "#1976d2" }}
-                    onClick={() => setReadMore(!readMore)}
-                  >
-                    {readMore ? "show less" : "read more"}
-                  </span>
-                </p>
+                <span
+                  variant="subtitle1"
+                  style={{ cursor: "pointer", color: "#1976d2" }}
+                  onClick={() => setReadMore(!readMore)}
+                >
+                  {readMore ? "show less" : "read more"}
+                </span>
               </Typography>
               <Typography>
                 <b>Address : </b>
@@ -108,8 +106,14 @@ function Destination(props) {
                   {readMore ? "show less" : "read more"}
                 </span>
               </Typography>
-              <Typography>{dest.visiting_hours}</Typography>
-              <Typography>{dest.visiting_fee}</Typography>
+              <Typography>
+                <b>Visiting Hours: </b>
+                {dest.visiting_hours}
+              </Typography>
+              <Typography>
+                <b>Visiting Fee : </b>
+                {dest.visiting_fee}
+              </Typography>
             </CardContent>
             <CardActions>
               <Button size="small">View</Button>

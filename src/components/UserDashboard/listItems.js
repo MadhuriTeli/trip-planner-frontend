@@ -6,7 +6,6 @@ import ListSubheader from "@mui/material/ListSubheader";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonOutline from "@mui/icons-material/PersonOutline";
 import AssignmentIcon from "@mui/icons-material/Assignment";
-import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import "./navbar.css";
 
