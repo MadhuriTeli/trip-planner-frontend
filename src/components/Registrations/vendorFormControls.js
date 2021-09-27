@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-const apiUrl = "http://localhost:8080/user/sign-up";
+const apiUrl = "http://localhost:8080/vendor/sign-up-vendor";
 const PostContactForm = async (values, successCallback, errorCallback) => {
   // do stuff
   // if successful
@@ -12,7 +12,11 @@ const PostContactForm = async (values, successCallback, errorCallback) => {
 const initialFormValues = {
   fname: "",
   lname: "",
+  company_name: "",
   address: "",
+  pincode: "",
+  city: "",
+  state: "",
   mobno: "",
   email: "",
   password: "",
@@ -32,6 +36,10 @@ export const useFormControls = () => {
       temp.fname = fieldValues.fname ? "" : "First Name is required.";
     if ("lname" in fieldValues)
       temp.lname = fieldValues.lname ? "" : "Last Name is required.";
+    if ("company_name" in fieldValues)
+      temp.company_name = fieldValues.company_name
+        ? ""
+        : "Company Name is required.";
     if ("mobno" in fieldValues) {
       temp.mobno = fieldValues.mobno ? "" : "Phone Number is required.";
       if (fieldValues.mobno)
@@ -48,6 +56,18 @@ export const useFormControls = () => {
     }
     if ("address" in fieldValues)
       temp.address = fieldValues.address ? "" : "Address is required.";
+
+    if ("pincode" in fieldValues) {
+      temp.pincode = fieldValues.pincode ? "" : "Pincode is required.";
+      if (fieldValues.pincode)
+        temp.pincode = /^[0-9\b]+$/.test(fieldValues.pincode)
+          ? ""
+          : "Pincode is not valid.";
+    }
+    if ("city" in fieldValues)
+      temp.city = fieldValues.city ? "" : "City is required.";
+    if ("state" in fieldValues)
+      temp.state = fieldValues.state ? "" : "State is required.";
 
     if ("password" in fieldValues) {
       temp.password =
@@ -95,7 +115,11 @@ export const useFormControls = () => {
     const isValid =
       fieldValues.fname &&
       fieldValues.lname &&
+      fieldValues.company_name &&
       fieldValues.address &&
+      fieldValues.pincode &&
+      fieldValues.city &&
+      fieldValues.state &&
       fieldValues.mobno &&
       fieldValues.email &&
       fieldValues.password &&
@@ -138,7 +162,11 @@ export const useFormControls = () => {
       const data1 = {
         fname: values.fname,
         lname: values.lname,
+        company_name: values.company_name,
         address: values.address,
+        pincode: values.pincode,
+        city: values.city,
+        state: values.state,
         mobno: values.mobno,
         email: values.email,
         password: values.password,
@@ -148,9 +176,9 @@ export const useFormControls = () => {
         console.log(result.data);
         if (result.data.Status === "Invalid") alert(result.data.message);
         else {
-          localStorage.setItem("user-info", JSON.stringify(result.data));
+          localStorage.setItem("vendor-info", JSON.stringify(result.data));
           alert(result.data.message);
-          history.push("/UserLogin");
+          history.push("/VendorLogin");
         }
       });
     }

@@ -16,7 +16,7 @@ function SavedDest(props) {
   const theme = createTheme();
   return (
     <ThemeProvider theme={theme}>
-      <Grid item md={6}>
+      <Grid item>
         <Card sx={{ display: "flex" }}>
           <CardContent sx={{ flex: 1 }}>
             <Typography component="h2" variant="h5">
@@ -26,19 +26,18 @@ function SavedDest(props) {
               {dest.city}
             </Typography>
             <Typography variant="subtitle1" paragraph>
-              <p>
-                {readMore
-                  ? dest.description
-                  : `${dest.description.substring(0, 30)}...
+              {readMore
+                ? dest.description
+                : `${dest.description.substring(0, 30)}...
         `}
-                <span
-                  variant="subtitle1"
-                  style={{ cursor: "pointer", color: "#1976d2" }}
-                  onClick={() => setReadMore(!readMore)}
-                >
-                  {readMore ? "show less" : "read more"}
-                </span>
-              </p>{" "}
+              <span
+                variant="subtitle1"
+                style={{ cursor: "pointer", color: "#1976d2" }}
+                onClick={() => setReadMore(!readMore)}
+              >
+                {readMore ? "show less" : "read more"}
+              </span>
+
               <Typography>
                 <b>Address : </b>
 

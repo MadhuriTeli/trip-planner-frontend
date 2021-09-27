@@ -84,24 +84,14 @@ function Hotel(props) {
             <CardContent>
               <Typography gutterBottom variant="h6" component="h2">
                 {`${
-                  hotel.title.length > 10
-                    ? hotel.title.substring(0, 15) + "..."
+                  hotel.title.length > 20
+                    ? hotel.title.substring(0, 30) + "..."
                     : hotel.title
                 }`}
               </Typography>
               <Typography>{hotel.city}</Typography>
             </CardContent>
-            <CardMedia
-              component="img"
-              sx={
-                {
-                  // 16:9
-                  // pt: "56.25%",
-                }
-              }
-              image={hotel.image}
-              alt={hotel.title}
-            />
+            <CardMedia component="img" image={hotel.image} alt={hotel.title} />
             <CardContent sx={{ flexGrow: 1 }}>
               <Typography>
                 {readMore

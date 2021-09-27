@@ -44,15 +44,22 @@ const SavedDestinations = () => {
           <h2 style={{ marginLeft: "20px" }}>Saved Destinations</h2>
           <Container sx={{ py: 1 }}>
             {repo.length > 0 ? (
-              <Grid container spacing={2}>
+              <Grid container spacing={4}>
                 {repo.map((item, index) => (
                   <SavedDest dest={item} key={index} />
                 ))}
               </Grid>
             ) : (
-              <Grid container spacing={2} md={12}>
-                No Records Available..!
-              </Grid>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  //  backgroundColor: "blue",
+                }}
+              >
+                No Records Added yet...!!!
+              </div>
             )}
           </Container>
           <Copyright sx={{ pt: 4 }} />
