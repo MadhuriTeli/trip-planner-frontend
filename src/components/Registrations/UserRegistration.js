@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -7,9 +7,11 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-// import { Link } from 'react-router-dom';
-import Box from "@material-ui/core/Box";
 import Register from "./Register";
+import Box from "@material-ui/core/Box";
+//import { useHistory } from "react-router-dom";
+import axios from "axios";
+//const baseURL = "http://localhost:8080/user/sign-up";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -42,8 +44,45 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UserRegistration() {
+export default function UserRegistration(props) {
   const classes = useStyles();
+
+  const [data, setdata] = useState({
+    fname: "",
+    lname: "",
+    address: "",
+    mobno: "",
+    email: "",
+    password: "",
+  });
+  const apiUrl = "http://localhost:8080/user/sign-up";
+
+  const Registration = (e) => {
+    e.preventDefault();
+    // debugger;
+    const data1 = {
+      fname: data.fname,
+      lname: data.lname,
+      address: data.address,
+      mobno: data.mobno,
+      email: data.email,
+      password: data.password,
+    };
+    axios.post(apiUrl, data1).then((result) => {
+      //  debugger;
+      console.log(result.data);
+      if (result.data.Status === "Invalid") alert("Invalid User");
+      else {
+        localStorage.setItem("user-info", JSON.stringify(result.data));
+        props.history.push("/UserLogin");
+      }
+    });
+  };
+  const onChange = (e) => {
+    e.persist();
+    // debugger;
+    setdata({ ...data, [e.target.name]: e.target.value });
+  };
 
   return (
     <div>
@@ -52,18 +91,20 @@ export default function UserRegistration() {
         <CssBaseline />
         <div className={classes.paper}>
           <h1>User Registration</h1>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} onSubmit={Registration} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="fname"
-                  name="firstName"
+                  name="fname"
                   variant="outlined"
                   required
                   fullWidth
-                  id="firstName"
+                  id="fname"
                   label="First Name"
                   autoFocus
+                  onChange={onChange}
+                  value={data.fname}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -71,10 +112,12 @@ export default function UserRegistration() {
                   variant="outlined"
                   required
                   fullWidth
-                  id="lastName"
+                  id="lname"
                   label="Last Name"
-                  name="lastName"
+                  name="lname"
                   autoComplete="lname"
+                  value={data.lname}
+                  onChange={onChange}
                 />
               </Grid>
 
@@ -87,6 +130,8 @@ export default function UserRegistration() {
                   label="Address"
                   name="address"
                   autoComplete="address"
+                  value={data.address}
+                  onChange={onChange}
                 />
               </Grid>
 
@@ -95,25 +140,16 @@ export default function UserRegistration() {
                   variant="outlined"
                   required
                   fullWidth
-                  id="phone"
+                  id="mobno"
                   label="Phone Number"
-                  name="phone"
+                  name="mobno"
                   autoComplete="phone"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="dob"
-                  label="Date of Birth"
-                  name="dob"
-                  autoComplete="dob"
+                  value={data.mobno}
+                  onChange={onChange}
                 />
               </Grid>
 
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   variant="outlined"
                   required
@@ -122,6 +158,8 @@ export default function UserRegistration() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  value={data.email}
+                  onChange={onChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -134,6 +172,8 @@ export default function UserRegistration() {
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  value={data.password}
+                  onChange={onChange}
                 />
               </Grid>
             </Grid>

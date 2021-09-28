@@ -7,7 +7,9 @@ import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import styled from "styled-components";
-import Button from "@mui/material/Button";
+//import Button from "@mui/material/Button";
+import Button from "@material-ui/core/Button";
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -55,24 +57,16 @@ function DashboardContent() {
               <article className="content">
                 <h1>
                   Welcome
-                  <span style={{ fontSize: "30px" }}> {user.fname}</span>
+                  <span style={{ fontSize: "30px" }}> {user.fname} {/*{user.id}*/}</span>
+                  <span style={{ fontSize: "30px" }}> {user.company_name} {/*{user.id}*/}</span>
                   <br />
-                  Build Your Own Customized Trip Plans
+                  Manage your packages
                 </h1>
                 <p>
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Iusto, at sed omnis corporis doloremque possimus velit!
-                  Repudiandae nisi odit, aperiam odio ducimus, obcaecati libero
-                  et quia tempora excepturi quis alias?
+                  Wel
                 </p>
-                <Button
-                  style={{
-                    backgroundColor: "#29b6f6",
-                    color: "black",
-                    fontWeight: "bold",
-                  }}
-                >
-                  <Link to="/destinations">start Planning Your Trip</Link>
+                <Button>
+                  <Link to="/AddPackage">Add Package</Link>
                 </Button>
               </article>
               <article className="img-container">

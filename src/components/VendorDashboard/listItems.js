@@ -30,12 +30,7 @@ const MainListItems = () => {
         className="navbar_link"
         to="/cart"
       >
-        <ListItem button>
-          <ListItemIcon>
-            <ShoppingCartIcon />
-          </ListItemIcon>
-          <ListItemText primary="Cart" />
-        </ListItem>
+
       </NavLink>
     </div>
   );
@@ -44,11 +39,11 @@ export default MainListItems;
 export const SecondaryListItems = () => {
   return (
     <div>
-      <ListSubheader inset>Saved Plans</ListSubheader>
+
       <NavLink
         activeClassName="navbar_link--active"
         className="navbar_link"
-        to="/savedPackages"
+        to="/VendorPackages" //  chage this to vendor/packages
       >
         <ListItem button>
           <ListItemIcon>
@@ -57,18 +52,7 @@ export const SecondaryListItems = () => {
           <ListItemText primary="Packages" />
         </ListItem>
       </NavLink>
-      <NavLink
-        activeClassName="navbar_link--active"
-        className="navbar_link"
-        to="/savedDestinations"
-      >
-        <ListItem button>
-          <ListItemIcon>
-            <AssignmentIcon />
-          </ListItemIcon>
-          <ListItemText primary="Destinations" />
-        </ListItem>
-      </NavLink>
+
       <NavLink
         activeClassName="navbar_link--active"
         className="navbar_link"
