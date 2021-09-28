@@ -1,30 +1,24 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Button from "@mui/material/Button";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-import { Link } from "react-router-dom";
+import CardActions from "@mui/material/CardActions";
+import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-const apiUrl = "http://localhost:8080/hotels/add";
-
-function Hotel(props) {
+function SavedHotel(props) {
+  const { hotel } = props;
+  console.log(hotel);
   const [readMore, setReadMore] = useState(false);
   const [readMoreAddress, setReadMoreAddress] = useState(false);
-  const theme = createTheme();
-  const { hotel } = props;
-
   const [open, setOpen] = React.useState(false);
   const [openError, setOpenError] = React.useState(false);
   function setAlert() {
@@ -46,32 +40,30 @@ function Hotel(props) {
     }
     setOpenError(false);
   };
-
-  function addHotels(id) {
+  const theme = createTheme();
+  const apiUrl = "http://localhost:8080/hotels/delete";
+  function deleteHotel(id) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     // let history = useHistory();
     const user = JSON.parse(localStorage.getItem("myData"));
     console.log(id, user.id);
 
     // debugger;
-    const data = { userId: user.id, hotelId: id };
-    axios.post(apiUrl, data).then((result) => {
+    // const data = { userId: user.id, destId: id };
+    const url = `${apiUrl}/${id}/${user.id}`;
+    axios.delete(url).then((result) => {
       // debugger;
-      if (result.data.status === 201) {
+      if (result.data.status === 200) {
         console.log(result.data.message);
         setAlert();
-        // setAlertError();
+        window.location.reload(false);
       } else {
-        // console.log(result.data.message);
-        // console.log("Something went wrong!!");
         setAlertError();
       }
     });
   }
-
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
       <Grid container spacing={3}>
         <Grid item>
           <Card
@@ -85,14 +77,24 @@ function Hotel(props) {
             <CardContent>
               <Typography gutterBottom variant="h6" component="h2">
                 {`${
-                  hotel.title.length > 20
-                    ? hotel.title.substring(0, 30) + "..."
+                  hotel.title.length > 10
+                    ? hotel.title.substring(0, 15) + "..."
                     : hotel.title
                 }`}
               </Typography>
               <Typography>{hotel.city}</Typography>
             </CardContent>
-            <CardMedia component="img" image={hotel.image} alt={hotel.title} />
+            <CardMedia
+              component="img"
+              sx={
+                {
+                  // 16:9
+                  // pt: "56.25%",
+                }
+              }
+              image={hotel.image}
+              alt={hotel.title}
+            />
             <CardContent sx={{ flexGrow: 1 }}>
               <Typography>
                 {readMore
@@ -140,20 +142,16 @@ function Hotel(props) {
               </Typography>
             </CardContent>
             <CardActions>
-              <Link to={`/hotels/${hotel.id}`} className="btn">
-                View
-              </Link>
-              <Button size="small" onClick={() => addHotels(hotel.id)}>
-                Add
+              <Button size="small" onClick={() => deleteHotel(hotel.id)}>
+                Not Interested
               </Button>
             </CardActions>
           </Card>
         </Grid>
-      </Grid>
-
+      </Grid>{" "}
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Hotel added to saved Hotels List..!!!
+          Hotel Deleted Successfully ..!!!
         </Alert>
       </Snackbar>
       <Snackbar
@@ -166,10 +164,11 @@ function Hotel(props) {
           severity="error"
           sx={{ width: "100%" }}
         >
-          Error occurred while adding Hotel to Saved Hotel List !!!
+          Error occurred while deleting Hotel from Saved Hotels List !!!
         </Alert>
       </Snackbar>
     </ThemeProvider>
   );
 }
-export default Hotel;
+
+export default SavedHotel;

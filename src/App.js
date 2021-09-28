@@ -13,6 +13,7 @@ import PackageDetails from "./components/VendorDashboard/Packages/PackageDetails
 import AddPackage from "./components/VendorDashboard/Packages/AddPackage";
 import Destinations from "./components/UserDashboard/Destinations/Destinations";
 import SingleDestination from "./components/UserDashboard/Destinations/SingleDestination";
+//import SingleDestination from "./components/UserDashboard/Destinations/SingleDestination";
 import Hotels from "./components/UserDashboard/Hotels/Hotels";
 import SingleHotel from "./components/UserDashboard/Hotels/SingleHotel";
 import SavedHotels from "./components/UserDashboard/SavedHotels";
@@ -34,14 +35,16 @@ function App() {
         <Route path="/about" component={About} />
         <Route path="/destinations" component={Destinations} />
         <Route path="/destinations/:id" component={SingleDestination} />
-        <Route path="/hotels" component={Hotels} />
-        <Route path="/hotels/:id" component={SingleHotel} />
 
-        <Route path="/savedHotels" component={SavedHotels} />
-        <Route path="/packages" component={Packages} />
         <Route path="/VendorPackages" component={VendorPackages} />
         <Route path="/PackageDetails" component={PackageDetails} />
         <Route path="/AddPackage" component={AddPackage} />
+        {/* <Route path="/destinations/:id" component={SingleDestination} /> */}
+        <Route path="/hotels" component={Hotels} />
+        <Route path="/hotels/:id" children={<SingleHotel />} />
+
+        <Route path="/savedHotels" component={SavedHotels} />
+        <Route path="/packages" component={Packages} />
         <Route path="/savedDestinations" component={SavedDestinations} />
         <Route path="/savedPackages" component={SavedPackages} />
         <Route path="/userProfile" component={UserProfile} />

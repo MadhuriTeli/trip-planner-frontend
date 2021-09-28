@@ -101,7 +101,7 @@ const Packages = () => {
   useEffect(() => {
     const url = `${API_URL}/packages`;
     axios(url)
-      .then((response) => { 
+      .then((response) => {
         console.log(response.data);
         setAllData(response.data);
         setFilteredData(response.data);
@@ -185,8 +185,8 @@ const Packages = () => {
   );
 };
 
-
-{/*
+{
+  /*
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -303,5 +303,6 @@ const Packages = () => {
     </ThemeProvider>
   );
 };
-*/}
+*/
+}
 export default Packages;

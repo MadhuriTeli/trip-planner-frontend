@@ -2,31 +2,16 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
 import Navbar from "../Navbar";
 import Sidebar from "../Sidebar";
 import Destination from "./Destination";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import { styled, alpha } from "@mui/material/styles";
-
+import Copyright from "../../pages/Footer";
 const API_URL = "http://localhost:8080";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        TripPlanner
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -73,30 +58,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const mdTheme = createTheme();
 
 const Destionations = () => {
-  // state = {
-  //   destinations: [],
-  //   // input: "",
-  // };
-
   const [allData, setAllData] = useState([]);
   const [filteredData, setFilteredData] = useState(allData);
-
-  // componentDidMount() {
-  //   const url = `${API_URL}/destinations`;
-  //   axios
-  //     .get(url)
-  //     .then((response) => response.data)
-  //     .then((data) => {
-  //       this.setState({ destinations: data });
-  //       console.log(this.state.destinations);
-  //     });
-  // }
-
-  // onChangeHandler(e) {
-  //   this.setState({
-  //     input: e.target.value,
-  //   });
-  // }
 
   useEffect(() => {
     const url = `${API_URL}/destinations`;
@@ -122,11 +85,6 @@ const Destionations = () => {
     console.log(result);
     setFilteredData(result);
   };
-
-  // const list = this.state.destinations
-  //   .filter((d) => this.state.input === "" || d.includes(this.state.input))
-  //   .map((d, index) => <li key={index}>{d}</li>);
-
   return (
     <ThemeProvider theme={mdTheme}>
       <Navbar />
@@ -138,9 +96,6 @@ const Destionations = () => {
               theme.palette.mode === "light"
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
-            //  flexGrow: 1,
-            //height: "100vh",
-            // overflow: "auto",
           }}
         >
           <h2 style={{ marginLeft: "20px" }}>Destionations</h2>
@@ -151,9 +106,6 @@ const Destionations = () => {
             <StyledInputBase
               placeholder="Search places,city,.."
               inputProps={{ "aria-label": "search" }}
-              // value={this.state.input}
-              // type="text"
-              // onChange={this.onChangeHandler.bind(this)}
               type="text"
               onChange={(event) => handleSearch(event)}
             />
@@ -162,17 +114,20 @@ const Destionations = () => {
             {/* End hero unit */}
             <Grid container spacing={3}>
               {filteredData.map((item, index) => (
-                <Grid item key={index} md={3}>
+                <Grid item key={item.id} md={4}>
                   <div>
                     <Destination
-                      title={item.title}
-                      image={item.image}
-                      description={item.description}
-                      address={item.address}
-                      city={item.city}
-                      state={item.state}
-                      visiting_fee={item.visiting_fee}
-                      visiting_hours={item.visiting_hours}
+                      dest={item}
+
+                      // id={item.id}
+                      // title={item.title}
+                      // image={item.image}
+                      // description={item.description}
+                      // address={item.address}
+                      // city={item.city}
+                      // state={item.state}
+                      // visiting_fee={item.visiting_fee}
+                      // visiting_hours={item.visiting_hours}
                     />
                   </div>
                 </Grid>

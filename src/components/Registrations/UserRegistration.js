@@ -4,26 +4,17 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Register from "./Register";
 import Box from "@material-ui/core/Box";
 //import { useHistory } from "react-router-dom";
-import axios from "axios";
+//import axios from "axios";
+
+import { useFormControls } from "./userFormControls";
 //const baseURL = "http://localhost:8080/user/sign-up";
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        TripPlanner
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+
+import Copyright from "../pages/Footer";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(4),
@@ -46,6 +37,44 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UserRegistration(props) {
   const classes = useStyles();
+  const { handleInputValue, handleFormSubmit, formIsValid, errors } =
+    useFormControls();
+  // const [data, setdata] = useState({
+  //   fname: "",
+  //   lname: "",
+  //   address: "",
+  //   mobno: "",
+  //   email: "",
+  //   password: "",
+  // });
+  //const apiUrl = "http://localhost:8080/user/sign-up";
+
+  // const Registration = (e) => {
+  //   e.preventDefault();
+  //   // debugger;
+  //   const data1 = {
+  //     fname: data.fname,
+  //     lname: data.lname,
+  //     address: data.address,
+  //     mobno: data.mobno,
+  //     email: data.email,
+  //     password: data.password,
+  //   };
+  //   axios.post(apiUrl, data1).then((result) => {
+  //     //  debugger;
+  //     console.log(result.data);
+  //     if (result.data.Status === "Invalid") alert("Invalid User");
+  //     else {
+  //       localStorage.setItem("user-info", JSON.stringify(result.data));
+  //       props.history.push("/UserLogin");
+  //     }
+  //   });
+  // };
+  // const onChange = (e) => {
+  //   e.persist();
+  //   // debugger;
+  //   setdata({ ...data, [e.target.name]: e.target.value });
+  // };
 
   const [data, setdata] = useState({
     fname: "",
@@ -91,7 +120,12 @@ export default function UserRegistration(props) {
         <CssBaseline />
         <div className={classes.paper}>
           <h1>User Registration</h1>
-          <form className={classes.form} onSubmit={Registration} noValidate>
+          <form
+            className={classes.form}
+            onSubmit={handleFormSubmit}
+            //onSubmit={Registration}
+            noValidate
+          >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -103,8 +137,14 @@ export default function UserRegistration(props) {
                   id="fname"
                   label="First Name"
                   autoFocus
-                  onChange={onChange}
-                  value={data.fname}
+                  // onChange={onChange}
+                  onChange={handleInputValue}
+                  onBlur={handleInputValue}
+                  // value={data.fname}
+                  {...(errors.fname && {
+                    error: true,
+                    helperText: errors.fname,
+                  })}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -116,8 +156,14 @@ export default function UserRegistration(props) {
                   label="Last Name"
                   name="lname"
                   autoComplete="lname"
-                  value={data.lname}
-                  onChange={onChange}
+                  // value={data.lname}
+                  // onChange={onChange}
+                  onChange={handleInputValue}
+                  onBlur={handleInputValue}
+                  {...(errors.lname && {
+                    error: true,
+                    helperText: errors.lname,
+                  })}
                 />
               </Grid>
 
@@ -130,8 +176,14 @@ export default function UserRegistration(props) {
                   label="Address"
                   name="address"
                   autoComplete="address"
-                  value={data.address}
-                  onChange={onChange}
+                  // value={data.address}
+                  // onChange={onChange}
+                  onChange={handleInputValue}
+                  onBlur={handleInputValue}
+                  {...(errors.address && {
+                    error: true,
+                    helperText: errors.address,
+                  })}
                 />
               </Grid>
 
@@ -140,12 +192,19 @@ export default function UserRegistration(props) {
                   variant="outlined"
                   required
                   fullWidth
+                  type="tel"
                   id="mobno"
                   label="Phone Number"
                   name="mobno"
                   autoComplete="phone"
-                  value={data.mobno}
-                  onChange={onChange}
+                  // value={data.mobno}
+                  // onChange={onChange}
+                  onChange={handleInputValue}
+                  onBlur={handleInputValue}
+                  {...(errors.mobno && {
+                    error: true,
+                    helperText: errors.mobno,
+                  })}
                 />
               </Grid>
 
@@ -158,8 +217,14 @@ export default function UserRegistration(props) {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  value={data.email}
-                  onChange={onChange}
+                  // value={data.email}
+                  // onChange={onChange}
+                  onChange={handleInputValue}
+                  onBlur={handleInputValue}
+                  {...(errors.email && {
+                    error: true,
+                    helperText: errors.email,
+                  })}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -172,8 +237,14 @@ export default function UserRegistration(props) {
                   type="password"
                   id="password"
                   autoComplete="current-password"
-                  value={data.password}
-                  onChange={onChange}
+                  // value={data.password}
+                  // onChange={onChange}
+                  onChange={handleInputValue}
+                  onBlur={handleInputValue}
+                  {...(errors.password && {
+                    error: true,
+                    helperText: errors.password,
+                  })}
                 />
               </Grid>
             </Grid>
@@ -182,6 +253,7 @@ export default function UserRegistration(props) {
               fullWidth
               variant="contained"
               color="primary"
+              disabled={!formIsValid()}
               className={classes.submit}
             >
               Register

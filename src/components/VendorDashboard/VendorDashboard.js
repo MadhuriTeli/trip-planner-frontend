@@ -57,14 +57,18 @@ function DashboardContent() {
               <article className="content">
                 <h1>
                   Welcome
-                  <span style={{ fontSize: "30px" }}> {user.fname} {/*{user.id}*/}</span>
-                  <span style={{ fontSize: "30px" }}> {user.company_name} {/*{user.id}*/}</span>
+                  <span style={{ fontSize: "30px" }}>
+                    {" "}
+                    {user.fname} {/*{user.id}*/}
+                  </span>
+                  <span style={{ fontSize: "30px" }}>
+                    {" "}
+                    {user.company_name} {/*{user.id}*/}
+                  </span>
                   <br />
                   Manage your packages
                 </h1>
-                <p>
-                  Wel
-                </p>
+                <p>Wel</p>
                 <Button>
                   <Link to="/AddPackage">Add Package</Link>
                 </Button>

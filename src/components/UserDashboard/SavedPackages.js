@@ -1,26 +1,10 @@
 import React from "react";
-import styled from "styled-components";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
 import Navbar from "../UserDashboard/Navbar";
 import Sidebar from "../UserDashboard/Sidebar";
-
 import Container from "@mui/material/Container";
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        TripPlanner
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
+import Copyright from "../pages/Footer";
 const mdTheme = createTheme();
 
 const SavedPackages = () => {
@@ -35,9 +19,6 @@ const SavedPackages = () => {
               theme.palette.mode === "light"
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
-            //  flexGrow: 1,
-            //height: "100vh",
-            // overflow: "auto",
           }}
         >
           <h2 style={{ marginLeft: "20px" }}>Saved Packages</h2>

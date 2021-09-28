@@ -1,22 +1,22 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Button from "@mui/material/Button";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-//import { useHistory } from "react-router-dom";
+import CardActions from "@mui/material/CardActions";
+import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-function Destination(props) {
+function SavedDest(props) {
+  const { dest } = props;
+  console.log(dest);
   const [readMore, setReadMore] = useState(false);
   const [readMoreAddress, setReadMoreAddress] = useState(false);
   const [open, setOpen] = React.useState(false);
@@ -41,23 +41,22 @@ function Destination(props) {
     setOpenError(false);
   };
   const theme = createTheme();
-  const { dest } = props;
-
-  function addDestination(id) {
+  const apiUrl = "http://localhost:8080/destinations/delete";
+  function deleteDestination(id) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     // let history = useHistory();
     const user = JSON.parse(localStorage.getItem("myData"));
     console.log(id, user.id);
 
-    const apiUrl = "http://localhost:8080/destinations/add";
-
     // debugger;
-    const data = { userId: user.id, destId: id };
-    axios.post(apiUrl, data).then((result) => {
+    // const data = { userId: user.id, destId: id };
+    const url = `${apiUrl}/${id}/${user.id}`;
+    axios.delete(url).then((result) => {
       // debugger;
-      if (result.data.status === 201) {
+      if (result.data.status === 200) {
         console.log(result.data.message);
         setAlert();
+        window.location.reload(false);
       } else {
         setAlertError();
       }
@@ -66,58 +65,28 @@ function Destination(props) {
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Grid container spacing={3}>
-        <Grid item>
-          <Card
-            sx={{
-              height: "100%",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <CardContent>
-              <Typography gutterBottom variant="h6" component="h2">
-                {`${
-                  dest.title.length > 25
-                    ? dest.title.substring(0, 30) + "..."
-                    : dest.title
-                }`}
-                {/* {dest.title} */}
-              </Typography>
-              <Typography>{dest.city}</Typography>
-            </CardContent>
-            <CardMedia
-              component="img"
-              sx={
-                {
-                  // 16:9
-                  // pt: "56.25%",
-                }
-              }
-              image={dest.image}
-              alt={dest.title}
-            />
-            <CardContent sx={{ flexGrow: 1 }}>
-              <Typography>
-                {/* {`${
-                  dest.description.length > 20
-                    ? dest.description.substring(0, 20) + "..."
-                    : dest.description
-                }`} */}
-
-                {readMore
-                  ? dest.description
-                  : `${dest.description.substring(0, 20)}...
+      <Grid item>
+        <Card sx={{ display: "flex" }}>
+          <CardContent sx={{ flex: 1 }}>
+            <Typography component="h2" variant="h5">
+              {dest.title}
+            </Typography>
+            <Typography variant="subtitle1" color="text.secondary">
+              {dest.city}
+            </Typography>
+            <Typography component={"div"} paragraph>
+              {readMore
+                ? dest.description
+                : `${dest.description.substring(0, 30)}...
         `}
-                <span
-                  variant="subtitle1"
-                  style={{ cursor: "pointer", color: "#1976d2" }}
-                  onClick={() => setReadMore(!readMore)}
-                >
-                  {readMore ? "show less" : "read more"}
-                </span>
-              </Typography>
+              <span
+                variant="subtitle1"
+                style={{ cursor: "pointer", color: "#1976d2" }}
+                onClick={() => setReadMore(!readMore)}
+              >
+                {readMore ? "show less" : "read more"}
+              </span>
+
               <Typography>
                 <b>Address : </b>
 
@@ -130,7 +99,7 @@ function Destination(props) {
                   style={{ cursor: "pointer", color: "#1976d2" }}
                   onClick={() => setReadMoreAddress(!readMoreAddress)}
                 >
-                  {readMore ? "show less" : "read more"}
+                  {readMoreAddress ? "show less" : "read more"}
                 </span>
               </Typography>
               <Typography>
@@ -141,19 +110,29 @@ function Destination(props) {
                 <b>Visiting Fee : </b>
                 {dest.visiting_fee}
               </Typography>
-            </CardContent>
+            </Typography>
+
             <CardActions>
-              <Button size="small">View</Button>
-              <Button size="small" onClick={() => addDestination(dest.id)}>
-                Add
+              <Button size="small" onClick={() => deleteDestination(dest.id)}>
+                Not Interested
               </Button>
             </CardActions>
-          </Card>
-        </Grid>
-      </Grid>{" "}
+          </CardContent>
+          <CardMedia
+            component="img"
+            sx={{
+              width: 160,
+              display: { xs: "none", sm: "block" },
+            }}
+            image={dest.image}
+            alt={dest.title}
+          />
+        </Card>{" "}
+      </Grid>
+
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Destination added to saved Destinations List..!!!
+          Destination Deleted Successfully ..!!!
         </Alert>
       </Snackbar>
       <Snackbar
@@ -166,11 +145,12 @@ function Destination(props) {
           severity="error"
           sx={{ width: "100%" }}
         >
-          Error occurred while adding Destination to Saved Destinations List !!!
+          Error occurred while deleting Destination from Saved Destinations List
+          !!!
         </Alert>
       </Snackbar>
     </ThemeProvider>
   );
 }
 
-export default Destination;
+export default SavedDest;
