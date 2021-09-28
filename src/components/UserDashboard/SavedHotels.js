@@ -28,6 +28,34 @@ const SavedHotels = () => {
   };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => getRepo(), []);
+
+  if (repo.length === 0) {
+    return (
+      <ThemeProvider theme={mdTheme}>
+        <Navbar />
+        <Box sx={{ display: "flex" }}>
+          <Sidebar />
+          <section className="cart">
+            {/* cart header */}
+            <header>
+              <h2 style={{ marginLeft: "20px" }}>Saved Hotels</h2>
+              <h4
+                style={{
+                  color: "#617d98;",
+                  marginTop: "1rem",
+                  textAlign: "center",
+                  marginLeft: "20px",
+                }}
+              >
+                No Records Added yet...!!!
+              </h4>
+            </header>
+          </section>
+        </Box>
+      </ThemeProvider>
+    );
+  }
+
   return (
     <ThemeProvider theme={mdTheme}>
       <Navbar />
@@ -42,24 +70,16 @@ const SavedHotels = () => {
           }}
         >
           <h2 style={{ marginLeft: "20px" }}>Saved Hotels</h2>
-
           <Container sx={{ py: 1 }}>
             {/* End hero unit */}
-            {repo.length > 0 ? (
-              <Grid container spacing={3}>
-                {repo.map((item, index) => (
-                  <Grid item key={index} md={6}>
-                    <SavedHotel hotel={item} key={index} />{" "}
-                  </Grid>
-                ))}
-              </Grid>
-            ) : (
-              <div>
-                <p>No Records Available..!</p>
-              </div>
-            )}
+            <Grid container spacing={3}>
+              {repo.map((item, index) => (
+                <Grid item md={6}>
+                  <SavedHotel hotel={item} key={item.id} />
+                </Grid>
+              ))}
+            </Grid>
           </Container>
-
           <Copyright sx={{ pt: 4 }} />
         </Box>
       </Box>

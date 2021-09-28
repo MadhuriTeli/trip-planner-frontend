@@ -56,6 +56,7 @@ function SavedDest(props) {
       if (result.data.status === 200) {
         console.log(result.data.message);
         setAlert();
+        window.location.reload(false);
       } else {
         setAlertError();
       }

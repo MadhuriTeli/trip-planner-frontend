@@ -28,6 +28,34 @@ const SavedDestinations = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => getRepo(), []);
   //const [readMore, setReadMore] = useState(true);
+
+  if (repo.length === 0) {
+    return (
+      <ThemeProvider theme={mdTheme}>
+        <Navbar />
+        <Box sx={{ display: "flex" }}>
+          <Sidebar />
+          <section className="cart">
+            {/* cart header */}
+            <header>
+              <h2 style={{ marginLeft: "20px" }}>Saved Destinations</h2>
+              <h4
+                style={{
+                  color: "#617d98;",
+                  marginTop: "1rem",
+                  textAlign: "center",
+                  marginLeft: "20px",
+                }}
+              >
+                No Records Added yet...!!!
+              </h4>
+            </header>
+          </section>
+        </Box>
+      </ThemeProvider>
+    );
+  }
+
   return (
     <ThemeProvider theme={mdTheme}>
       <Navbar />
@@ -43,24 +71,11 @@ const SavedDestinations = () => {
         >
           <h2 style={{ marginLeft: "20px" }}>Saved Destinations</h2>
           <Container sx={{ py: 1 }}>
-            {repo.length > 0 ? (
-              <Grid container spacing={4}>
-                {repo.map((item, index) => (
-                  <SavedDest dest={item} key={index} />
-                ))}
-              </Grid>
-            ) : (
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  //  backgroundColor: "blue",
-                }}
-              >
-                No Records Added yet...!!!
-              </div>
-            )}
+            <Grid container spacing={4}>
+              {repo.map((item, index) => (
+                <SavedDest dest={item} key={index} />
+              ))}
+            </Grid>
           </Container>
           <Copyright sx={{ pt: 4 }} />
         </Box>
