@@ -12,6 +12,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Login from "./Login";
 import Copyright from "../pages/Footer";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -34,7 +40,27 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UserLogin(props) {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const [openError, setOpenError] = React.useState(false);
+  function setAlert() {
+    setOpen(true);
+  }
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
 
+  function setAlertError() {
+    setOpenError(true);
+  }
+  const handleCloseError = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenError(false);
+  };
   const [user, setuser] = useState({ email: "", password: "" });
   const apiUrl = "http://localhost:8080/user/login";
   const LoginFn = (e) => {
@@ -46,12 +72,16 @@ export default function UserLogin(props) {
       console.log(result.data);
       const serializedState = JSON.stringify(result.data.user);
       var a = localStorage.setItem("myData", serializedState);
-      console.log("A:", a);
-      //const userDetails = result.data.user;
-      console.log(result.data.message);
-      console.log(result.data.status);
-      if (result.data.status === 200) props.history.push("/UserDashboard");
-      else alert("Invalid User");
+      if (result.data.status === 200) {
+        console.log(result.data.message);
+        setAlert();
+        props.history.push("/userDashboard");
+      } else if (result.data.status === 401) {
+        console.log(result.data.message);
+        setAlertError();
+      } else {
+        alert("Invalid user");
+      }
     });
   };
 
@@ -125,7 +155,25 @@ export default function UserLogin(props) {
             </Box>
           </form>
         </div>
-      </Container>
+      </Container>{" "}
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          Login Successful....!!!!
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={openError}
+        autoHideDuration={6000}
+        onClose={handleCloseError}
+      >
+        <Alert
+          onClose={handleCloseError}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Invalid credentials...!! Please Try Again...!!!
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
