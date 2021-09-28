@@ -41,7 +41,7 @@ const SavedHotels = () => {
               <h2 style={{ marginLeft: "20px" }}>Saved Hotels</h2>
               <h4
                 style={{
-                  color: "#617d98;",
+                  color: "#617d98",
                   marginTop: "1rem",
                   textAlign: "center",
                   marginLeft: "20px",
@@ -74,8 +74,8 @@ const SavedHotels = () => {
             {/* End hero unit */}
             <Grid container spacing={3}>
               {repo.map((item, index) => (
-                <Grid item md={6}>
-                  <SavedHotel hotel={item} key={item.id} />
+                <Grid item md={6} key={index}>
+                  <SavedHotel hotel={item} />
                 </Grid>
               ))}
             </Grid>

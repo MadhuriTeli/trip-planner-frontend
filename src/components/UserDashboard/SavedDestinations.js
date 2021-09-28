@@ -41,7 +41,7 @@ const SavedDestinations = () => {
               <h2 style={{ marginLeft: "20px" }}>Saved Destinations</h2>
               <h4
                 style={{
-                  color: "#617d98;",
+                  color: "#617d98",
                   marginTop: "1rem",
                   textAlign: "center",
                   marginLeft: "20px",

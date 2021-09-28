@@ -114,7 +114,7 @@ const Destionations = () => {
             {/* End hero unit */}
             <Grid container spacing={3}>
               {filteredData.map((item, index) => (
-                <Grid item key={index} md={4}>
+                <Grid item key={item.id} md={4}>
                   <div>
                     <Destination
                       dest={item}

@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import UserRegistration from "./components/Registrations/UserRegistration";
 import VendorRegistration from "./components/Registrations/VendorRegistration";
 import UserLogin from "./components/Login/UserLogin";
@@ -32,7 +32,7 @@ function App() {
         <Route path="/destinations" component={Destinations} />
         {/* <Route path="/destinations/:id" component={SingleDestination} /> */}
         <Route path="/hotels" component={Hotels} />
-        <Route path="/hotels/:id" component={SingleHotel} />
+        <Route path="/hotels/:id" children={<SingleHotel />} />
 
         <Route path="/savedHotels" component={SavedHotels} />
         <Route path="/packages" component={Packages} />

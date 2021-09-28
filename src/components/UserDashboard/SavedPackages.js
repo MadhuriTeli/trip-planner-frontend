@@ -19,9 +19,6 @@ const SavedPackages = () => {
               theme.palette.mode === "light"
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
-            //  flexGrow: 1,
-            //height: "100vh",
-            // overflow: "auto",
           }}
         >
           <h2 style={{ marginLeft: "20px" }}>Saved Packages</h2>

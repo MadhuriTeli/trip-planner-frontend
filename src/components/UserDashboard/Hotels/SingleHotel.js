@@ -10,61 +10,14 @@ import Navbar from "../Navbar";
 import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
 import Container from "@mui/material/Container";
+import Copyright from "../../pages/Footer";
 const API_URL = "http://localhost:8080/hotels/";
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        TripPlanner
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const mdTheme = createTheme();
 
 const SingleHotel = () => {
-  const initialState = {
-    isSidebarOpen: false,
-    products_loading: false,
-    products_error: false,
-    products: [],
-    featured_products: [],
-    single_product_loading: false,
-    single_product_error: false,
-    single_product: {},
-  };
-
   const { id } = useParams();
   const history = useHistory();
-  const {
-    single_product_loading: loading,
-    single_product_error: error,
-    single_product: product,
-    fetchSingleProduct,
-  } = initialState();
-
-  //   useEffect(() => {
-  //     fetchSingleProduct(`${url}${id}`);
-  //     // eslint-disable-next-line
-  //   }, [id]);
-  //   useEffect(() => {
-  //     if (error) {
-  //       setTimeout(() => {
-  //         history.push("/");
-  //       }, 3000);
-  //     }
-  //     // eslint-disable-next-line
-  //   }, [error]);
-  //   if (loading) {
-  //     return `<h1>loading/h1>`;
-  //   }
-  //   if (error) {
-  //     return `<h1>error/h1>`;
-  //   }
   const [allData, setAllData] = useState([]);
   useEffect(() => {
     const url = `${API_URL}${id}`;
@@ -101,9 +54,6 @@ const SingleHotel = () => {
               theme.palette.mode === "light"
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
-            //  flexGrow: 1,
-            //height: "100vh",
-            // overflow: "auto",
           }}
         >
           <h2 style={{ marginLeft: "20px" }}>About</h2>

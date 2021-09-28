@@ -74,7 +74,7 @@ function SavedDest(props) {
             <Typography variant="subtitle1" color="text.secondary">
               {dest.city}
             </Typography>
-            <Typography variant="subtitle1" paragraph>
+            <Typography component={"div"} paragraph>
               {readMore
                 ? dest.description
                 : `${dest.description.substring(0, 30)}...
