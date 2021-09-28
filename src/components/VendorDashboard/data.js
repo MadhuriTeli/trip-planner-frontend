@@ -8,17 +8,17 @@ export const links = [
   },
   {
     id: 2,
-    url: "/packages",
+    url: "/vendorpackages",
     text: "Packages",
   },
   {
     id: 3,
-    url: "/hotels",
+    url: "/vendorhotels",
     text: "Hotels",
   },
   {
     id: 4,
-    url: "/about",
+    url: "/vendorabout",
     text: "About",
   },
 ];

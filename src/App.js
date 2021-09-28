@@ -35,7 +35,11 @@ function App() {
         <Route path="/about" component={About} />
         <Route path="/destinations" component={Destinations} />
         <Route path="/destinations/:id" component={SingleDestination} />
+        <Route path="/hotels" component={Hotels} />
+        <Route path="/hotels/:id" component={SingleHotel} />
 
+        <Route path="/savedHotels" component={SavedHotels} />
+        <Route path="/packages" component={Packages} />
         <Route path="/VendorPackages" component={VendorPackages} />
         <Route path="/PackageDetails" component={PackageDetails} />
         <Route path="/AddPackage" component={AddPackage} />

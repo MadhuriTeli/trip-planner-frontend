@@ -44,7 +44,7 @@ export const SecondaryListItems = () => {
   return (
     <div>
       <ListSubheader inset>Saved Plans</ListSubheader>
-      <NavLink
+      {/* <NavLink
         activeClassName="navbar_link--active"
         className="navbar_link"
         to="/savedPackages"
@@ -55,7 +55,7 @@ export const SecondaryListItems = () => {
           </ListItemIcon>
           <ListItemText primary="Packages" />
         </ListItem>
-      </NavLink>
+      </NavLink> */}
       <NavLink
         activeClassName="navbar_link--active"
         className="navbar_link"
