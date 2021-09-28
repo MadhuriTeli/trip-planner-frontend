@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
@@ -7,13 +8,60 @@ import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 function SavedDest(props) {
   const { dest } = props;
   console.log(dest);
   const [readMore, setReadMore] = useState(false);
   const [readMoreAddress, setReadMoreAddress] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [openError, setOpenError] = React.useState(false);
+  function setAlert() {
+    setOpen(true);
+  }
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  function setAlertError() {
+    setOpenError(true);
+  }
+  const handleCloseError = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenError(false);
+  };
   const theme = createTheme();
+  const apiUrl = "http://localhost:8080/destinations/delete";
+  function deleteDestination(id) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    // let history = useHistory();
+    const user = JSON.parse(localStorage.getItem("myData"));
+    console.log(id, user.id);
+
+    // debugger;
+    // const data = { userId: user.id, destId: id };
+    const url = `${apiUrl}/${id}/${user.id}`;
+    axios.delete(url).then((result) => {
+      // debugger;
+      if (result.data.status === 200) {
+        console.log(result.data.message);
+        setAlert();
+      } else {
+        setAlertError();
+      }
+    });
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Grid item>
@@ -64,7 +112,9 @@ function SavedDest(props) {
             </Typography>
 
             <CardActions>
-              <Button size="small">Not Interested</Button>
+              <Button size="small" onClick={() => deleteDestination(dest.id)}>
+                Not Interested
+              </Button>
             </CardActions>
           </CardContent>
           <CardMedia
@@ -78,6 +128,26 @@ function SavedDest(props) {
           />
         </Card>{" "}
       </Grid>
+
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          Destination Deleted Successfully ..!!!
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={openError}
+        autoHideDuration={6000}
+        onClose={handleCloseError}
+      >
+        <Alert
+          onClose={handleCloseError}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Error occurred while deleting Destination from Saved Destinations List
+          !!!
+        </Alert>
+      </Snackbar>
     </ThemeProvider>
   );
 }
