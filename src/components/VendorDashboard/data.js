@@ -11,16 +11,16 @@ export const links = [
     url: "/vendorpackages",
     text: "Packages",
   },
-  {
-    id: 3,
-    url: "/vendorhotels",
-    text: "Hotels",
-  },
-  {
-    id: 4,
-    url: "/vendorabout",
-    text: "About",
-  },
+  // {
+  //   id: 3,
+  //   url: "/vendorhotels",
+  //   text: "Hotels",
+  // },
+  // {
+  //   id: 4,
+  //   url: "/vendorabout",
+  //   text: "About",
+  // },
 ];
 
 export const social = [

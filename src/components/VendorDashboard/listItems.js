@@ -62,7 +62,7 @@ export const SecondaryListItems = () => {
         </ListItem>
       </NavLink>
 
-      <NavLink
+      {/* <NavLink
         activeClassName="navbar_link--active"
         className="navbar_link"
         to="/vendorHotels"
@@ -73,7 +73,7 @@ export const SecondaryListItems = () => {
           </ListItemIcon>
           <ListItemText primary="Hotels" />
         </ListItem>
-      </NavLink>
+      </NavLink> */}
     </div>
   );
 };
