@@ -97,10 +97,11 @@ function Package(props) {
               {/* <Typography>{pack.id}</Typography> */}
 
               <Typography gutterBottom variant="h6" component="h2">
-                {`${pack.tripname.length > 10
-                  ? pack.tripname.substring(0, 15) + "..."
-                  : pack.tripname
-                  }`}
+                {`${
+                  pack.tripname.length > 10
+                    ? pack.tripname.substring(0, 15) + "..."
+                    : pack.tripname
+                }`}
               </Typography>
               <Typography>{pack.duration}</Typography>
             </CardContent>
@@ -112,7 +113,7 @@ function Package(props) {
                   // pt: "56.25%",
                 }
               }
-              image={API_URL + "/" + pack.image}
+              image={pack.image}
               alt={pack.tripname}
             />
             <CardContent sx={{ flexGrow: 1 }}>
@@ -120,7 +121,7 @@ function Package(props) {
                 {readMore
                   ? pack.description
                   : `${pack.description.substring(0, 20)}...
-  `}
+        `}
                 <span
                   variant="subtitle1"
                   style={{ cursor: "pointer", color: "#1976d2" }}
@@ -133,7 +134,7 @@ function Package(props) {
                 {readMoreAddress
                   ? pack.package_inclusions
                   : `${pack.package_inclusions.substring(0, 20)}...
-  `}
+        `}
                 <span
                   variant="subtitle1"
                   style={{ cursor: "pointer", color: "#1976d2" }}

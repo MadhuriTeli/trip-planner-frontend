@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Navbar from "../UserDashboard/Navbar";
-import Sidebar from "../UserDashboard/Sidebar";
+import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -13,7 +13,7 @@ import Container from "@mui/material/Container";
 import Copyright from "../pages/Footer";
 const mdTheme = createTheme();
 
-export default class UserProfile extends Component {
+export default class VendorProfile extends Component {
   userData;
 
   constructor(props) {
@@ -21,7 +21,11 @@ export default class UserProfile extends Component {
 
     this.onChangeFname = this.onChangeFname.bind(this);
     this.onChangeLname = this.onChangeLname.bind(this);
+    this.onChangeCompany_name = this.onChangeCompany_name.bind(this);
     this.onChangeAddress = this.onChangeAddress.bind(this);
+    this.onChangePincode = this.onChangePincode.bind(this);
+    this.onChangeCity = this.onChangeCity.bind(this);
+    this.onChangeState = this.onChangeState.bind(this);
     this.onChangeMobno = this.onChangeMobno.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -29,7 +33,11 @@ export default class UserProfile extends Component {
     this.state = {
       fname: "",
       lname: "",
+      company_name: "",
       address: "",
+      pincode: "",
+      city: "",
+      state: "",
       mobno: "",
       email: "",
     };
@@ -46,10 +54,24 @@ export default class UserProfile extends Component {
   onChangeAddress(e) {
     this.setState({ address: e.target.value });
   }
+
   onChangeMobno(e) {
     this.setState({ mobno: e.target.value });
   }
   onChangeEmail(e) {
+    this.setState({ email: e.target.value });
+  }
+  onChangeCompany_name(e) {
+    this.setState({ mobno: e.target.value });
+  }
+  onChangePincode(e) {
+    this.setState({ email: e.target.value });
+  }
+
+  onChangeCity(e) {
+    this.setState({ mobno: e.target.value });
+  }
+  onChangeState(e) {
     this.setState({ email: e.target.value });
   }
 
@@ -59,7 +81,11 @@ export default class UserProfile extends Component {
     this.setState({
       fname: "",
       lname: "",
+      company_name: "",
       address: "",
+      pincode: "",
+      city: "",
+      state: "",
       mobno: "",
       email: "",
     });
@@ -73,7 +99,11 @@ export default class UserProfile extends Component {
       this.setState({
         fname: this.userData.fname,
         lname: this.userData.lname,
+        company_name: this.userData.company_name,
         address: this.userData.address,
+        pincode: this.userData.pincode,
+        city: this.userData.city,
+        state: this.userData.state,
         mobno: this.userData.mobno,
         email: this.userData.email,
       });
@@ -81,7 +111,11 @@ export default class UserProfile extends Component {
       this.setState({
         fname: "",
         lname: "",
+        company_name: "",
         address: "",
+        pincode: "",
+        city: "",
+        state: "",
         mobno: "",
         email: "",
       });
@@ -108,7 +142,7 @@ export default class UserProfile extends Component {
                 alignItems: "center",
               }}
             >
-              <h2>User Profile</h2>
+              <h2>Vendor Profile</h2>
               <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
                 <PersonOutlineRounded />
               </Avatar>
@@ -139,6 +173,18 @@ export default class UserProfile extends Component {
                         variant="standard"
                         value={this.state.lname}
                       />
+                    </Grid>{" "}
+                    <Grid item xs={12} sm={12}>
+                      <TextField
+                        required
+                        id="company_name"
+                        name="company_name"
+                        label="Company Name"
+                        fullWidth
+                        autoComplete="family-name"
+                        variant="standard"
+                        value={this.state.company_name}
+                      />
                     </Grid>
                     <Grid item xs={12} sm={12}>
                       <TextField
@@ -152,7 +198,43 @@ export default class UserProfile extends Component {
                         value={this.state.address}
                       />
                     </Grid>
-                    <Grid item xs={12} sm={12}>
+                    <Grid item xs={12} sm={4}>
+                      <TextField
+                        required
+                        id="city"
+                        name="city"
+                        label="City"
+                        fullWidth
+                        autoComplete="family-name"
+                        variant="standard"
+                        value={this.state.city}
+                      />
+                    </Grid>{" "}
+                    <Grid item xs={12} sm={4}>
+                      <TextField
+                        required
+                        id="state"
+                        name="state"
+                        label="State"
+                        fullWidth
+                        autoComplete="family-name"
+                        variant="standard"
+                        value={this.state.state}
+                      />
+                    </Grid>{" "}
+                    <Grid item xs={12} sm={4}>
+                      <TextField
+                        required
+                        id="pincode"
+                        name="pincode"
+                        label="Pincode"
+                        fullWidth
+                        autoComplete="family-name"
+                        variant="standard"
+                        value={this.state.pincode}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
                       <TextField
                         required
                         id="mobno"
@@ -164,7 +246,7 @@ export default class UserProfile extends Component {
                         value={this.state.mobno}
                       />
                     </Grid>{" "}
-                    <Grid item xs={12} sm={12}>
+                    <Grid item xs={12} sm={6}>
                       <TextField
                         required
                         id="email"

@@ -19,6 +19,7 @@ import SavedDestinations from "./components/UserDashboard/SavedDestinations";
 import SavedPackages from "./components/UserDashboard/SavedPackages";
 import UserProfile from "./components/UserDashboard/UserProfile";
 import Cart from "./components/UserDashboard/Cart";
+import VendorProfile from "./components/VendorDashboard/VendorProfile";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
         <Route path="/VendorPackages" component={VendorPackages} />
         <Route path="/PackageDetails" component={PackageDetails} />
         <Route path="/AddPackage" component={AddPackage} />
+        <Route path="/vendorProfile" component={VendorProfile} />
 
         <Route path="/savedDestinations" component={SavedDestinations} />
         <Route path="/savedPackages" component={SavedPackages} />
