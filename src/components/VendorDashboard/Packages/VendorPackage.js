@@ -44,7 +44,25 @@ class VendorPackage extends React.Component {
 
   handleModify = () => {};
 
-  handleDelete = () => {};
+  handleDelete = (id) => {
+    const vendor = JSON.parse(localStorage.getItem("myData"));
+    console.log(id, vendor.id);
+
+    // debugger;
+    // const data = { userId: user.id, destId: id };
+    const url = `${API_URL}/packages/${id}/${vendor.id}`;
+    axios.delete(url).then((result) => {
+      // debugger;
+      if (result.data.status === 200) {
+        console.log(result.data.message);
+
+        window.location.reload(false);
+        alert(result.data.message);
+      } else {
+        alert(result.data.message);
+      }
+    });
+  };
 
   render() {
     const theme = createTheme();
@@ -82,7 +100,10 @@ class VendorPackage extends React.Component {
                   <Button size="small" onClick={this.handleModify}>
                     Modify
                   </Button>
-                  <Button size="small" onClick={this.handleDelete}>
+                  <Button
+                    size="small"
+                    onClick={() => this.handleDelete(this.props.id)}
+                  >
                     Delete
                   </Button>
                 </CardActions>
