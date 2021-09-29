@@ -19,10 +19,9 @@ import styled from "styled-components";
 const API_URL = "http://localhost:8080";
 
 class VendorPackage extends React.Component {
-
   state = {
-    vendorId: 0
-  }
+    vendorId: 0,
+  };
 
   handleClick = () => {
     //console.log("Monika");
@@ -34,20 +33,18 @@ class VendorPackage extends React.Component {
       .then((response) => {
         console.log(response.data);
         this.setState({
-          vendorId: this.props.id
-        })
+          vendorId: this.props.id,
+        });
         //this.props.history.push(`${API_URL}/PackageDetails`, response.data);
       })
       .catch((error) => {
         console.log("Error getting fake data: " + error);
       });
-  }
+  };
 
-  handleModify = () => {
-  }
+  handleModify = () => {};
 
-  handleDelete = () => {
-  }
+  handleDelete = () => {};
 
   render() {
     const theme = createTheme();
@@ -72,22 +69,22 @@ class VendorPackage extends React.Component {
                       // pt: "56.25%",
                     }
                   }
-                  image={this.props.image}
+                  image={API_URL + "/" + this.props.image}
+                  //  image={API_URL + "/" + this.props.image}
                   alt={this.props.tripname}
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography>
-                    {this.props.description}
-                  </Typography>
-                  <Typography>
-                    {" "}
-                    {this.props.package_inclusions}
-                  </Typography>
+                  <Typography>{this.props.description}</Typography>
+                  <Typography> {this.props.package_inclusions}</Typography>
                   <Typography>{this.props.amount}</Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small" onClick={this.handleModify} >Modify</Button>
-                  <Button size="small" onClick={this.handleDelete} >Delete</Button>
+                  <Button size="small" onClick={this.handleModify}>
+                    Modify
+                  </Button>
+                  <Button size="small" onClick={this.handleDelete}>
+                    Delete
+                  </Button>
                 </CardActions>
               </article>
             </Wrapper>
@@ -113,10 +110,11 @@ class VendorPackage extends React.Component {
                 <Typography>{this.props.id}</Typography>
 
                 <Typography gutterBottom variant="h6" component="h2">
-                  {`${this.props.tripname.length > 10
-                    ? this.props.tripname.substring(0, 15) + "..."
-                    : this.props.tripname
-                    }`}
+                  {`${
+                    this.props.tripname.length > 10
+                      ? this.props.tripname.substring(0, 15) + "..."
+                      : this.props.tripname
+                  }`}
                 </Typography>
                 <Typography>{this.props.duration}</Typography>
               </CardContent>
@@ -128,32 +126,37 @@ class VendorPackage extends React.Component {
                     // pt: "56.25%",
                   }
                 }
-                image={this.props.image}
+                image={API_URL + "/" + this.props.image}
+                //   image={this.props.image}
                 alt={this.props.tripname}
               />
               <CardContent sx={{ flexGrow: 1 }}>
                 <Typography>
-                  {`${this.props.description.length > 20
-                    ? this.props.description.substring(0, 20) + "..."
-                    : this.props.description
-                    }`}
+                  {`${
+                    this.props.description.length > 20
+                      ? this.props.description.substring(0, 20) + "..."
+                      : this.props.description
+                  }`}
                 </Typography>
                 <Typography>
                   {" "}
-                  {`${this.props.package_inclusions.length > 25
-                    ? this.props.package_inclusions.substring(0, 25) + "..."
-                    : this.props.package_inclusions
-                    }`}
+                  {`${
+                    this.props.package_inclusions.length > 25
+                      ? this.props.package_inclusions.substring(0, 25) + "..."
+                      : this.props.package_inclusions
+                  }`}
                 </Typography>
                 <Typography>{this.props.amount}</Typography>
               </CardContent>
               <CardActions>
-                <Button size="small" onClick={this.handleClick} >View</Button>
+                <Button size="small" onClick={this.handleClick}>
+                  View
+                </Button>
               </CardActions>
             </Card>
           </Grid>
         </Grid>
-      </ThemeProvider >
+      </ThemeProvider>
     );
   }
 }

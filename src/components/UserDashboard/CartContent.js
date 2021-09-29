@@ -109,7 +109,8 @@ function CartContent(props) {
                   // pt: "56.25%",
                 }
               }
-              image={pack.image}
+              image={API_URL + "/" + pack.image}
+              //image={pack.image}
               alt={pack.tripname}
             />
             <CardContent sx={{ flexGrow: 1 }}>
