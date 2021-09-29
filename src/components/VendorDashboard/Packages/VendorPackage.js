@@ -72,7 +72,7 @@ class VendorPackage extends React.Component {
                       // pt: "56.25%",
                     }
                   }
-                  image={this.props.image}
+                  image={API_URL + "/" + this.props.image}
                   alt={this.props.tripname}
                 />
                 <CardContent sx={{ flexGrow: 1 }}>

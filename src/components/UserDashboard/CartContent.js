@@ -6,7 +6,6 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -18,7 +17,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 const API_URL = "http://localhost:8080";
 
-function Package(props) {
+function CartContent(props) {
   const [readMore, setReadMore] = React.useState(false);
   const [readMoreAddress, setReadMoreAddress] = React.useState(false);
   const [open, setOpen] = React.useState(false);
@@ -46,7 +45,6 @@ function Package(props) {
   const handleClick = () => {
     console.log("Amol");
     const url = `${API_URL}/packages/2`;
-    //const url = `${API_URL}/packages/${this.props.id}`;
     console.log(url);
 
     axios(url)
@@ -57,21 +55,22 @@ function Package(props) {
         console.log("Error getting fake data: " + error);
       });
   };
-  function addHotel(id) {
+  const apiUrl = "http://localhost:8080/packages/delete";
+  function deletePackage(id) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     // let history = useHistory();
     const user = JSON.parse(localStorage.getItem("myData"));
     console.log(id, user.id);
 
-    const apiUrl = "http://localhost:8080/packages/add";
-
     // debugger;
-    const data = { userId: user.id, packageId: id };
-    axios.post(apiUrl, data).then((result) => {
+    // const data = { userId: user.id, destId: id };
+    const url = `${apiUrl}/${id}/${user.id}`;
+    axios.delete(url).then((result) => {
       // debugger;
-      if (result.data.status === 201) {
+      if (result.data.status === 200) {
         console.log(result.data.message);
         setAlert();
+        window.location.reload(false);
       } else {
         setAlertError();
       }
@@ -81,7 +80,6 @@ function Package(props) {
   const { pack } = props;
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
       <Grid container spacing={3}>
         <Grid item>
           <Card
@@ -91,16 +89,15 @@ function Package(props) {
               flexDirection: "column",
             }}
           >
-            {" "}
-            {/* {package.id} */}
             <CardContent>
               {/* <Typography>{pack.id}</Typography> */}
 
               <Typography gutterBottom variant="h6" component="h2">
-                {`${pack.tripname.length > 10
-                  ? pack.tripname.substring(0, 15) + "..."
-                  : pack.tripname
-                  }`}
+                {`${
+                  pack.tripname.length > 10
+                    ? pack.tripname.substring(0, 15) + "..."
+                    : pack.tripname
+                }`}
               </Typography>
               <Typography>{pack.duration}</Typography>
             </CardContent>
@@ -112,7 +109,7 @@ function Package(props) {
                   // pt: "56.25%",
                 }
               }
-              image={API_URL + "/" + pack.image}
+              image={pack.image}
               alt={pack.tripname}
             />
             <CardContent sx={{ flexGrow: 1 }}>
@@ -120,7 +117,7 @@ function Package(props) {
                 {readMore
                   ? pack.description
                   : `${pack.description.substring(0, 20)}...
-  `}
+        `}
                 <span
                   variant="subtitle1"
                   style={{ cursor: "pointer", color: "#1976d2" }}
@@ -129,11 +126,12 @@ function Package(props) {
                   {readMore ? "show less" : "read more"}
                 </span>
               </Typography>
+
               <Typography>
                 {readMoreAddress
                   ? pack.package_inclusions
                   : `${pack.package_inclusions.substring(0, 20)}...
-  `}
+        `}
                 <span
                   variant="subtitle1"
                   style={{ cursor: "pointer", color: "#1976d2" }}
@@ -148,8 +146,8 @@ function Package(props) {
               <Button size="small" onClick={handleClick}>
                 View
               </Button>
-              <Button size="small" onClick={() => addHotel(pack.id)}>
-                Add
+              <Button size="small" onClick={() => deletePackage(pack.id)}>
+                Not Interested
               </Button>
             </CardActions>
           </Card>
@@ -157,7 +155,7 @@ function Package(props) {
       </Grid>{" "}
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Package added to Cart ..!!!
+          Package deleted Successfully ..!!!
         </Alert>
       </Snackbar>
       <Snackbar
@@ -170,10 +168,10 @@ function Package(props) {
           severity="error"
           sx={{ width: "100%" }}
         >
-          Error occurred while adding Package ..!!! !!!
+          Error occurred while deleting Package ..!!! !!!
         </Alert>
       </Snackbar>
     </ThemeProvider>
   );
 }
-export default Package;
+export default CartContent;
