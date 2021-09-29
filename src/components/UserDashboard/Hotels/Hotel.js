@@ -9,7 +9,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
 import { Link } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
@@ -140,9 +139,7 @@ function Hotel(props) {
               </Typography>
             </CardContent>
             <CardActions>
-              <Link to={`/hotels/${hotel.id}`} className="btn">
-                View
-              </Link>
+              <Link to={`/hotels/${hotel.id}`}>View</Link>
               <Button size="small" onClick={() => addHotels(hotel.id)}>
                 Add
               </Button>

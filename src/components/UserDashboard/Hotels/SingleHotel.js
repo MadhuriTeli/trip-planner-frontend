@@ -4,8 +4,6 @@ import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-//import Link from "@mui/material/Link";
 import Navbar from "../Navbar";
 import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
@@ -62,7 +60,7 @@ const SingleHotel = () => {
               <Wrapper>
                 <div className="section section-center page">
                   <Link to="/hotels" className="btn">
-                    back to products
+                    back to Hotels
                   </Link>
                   <div className="product-center">
                     <img src={image} alt={title} />

@@ -12,6 +12,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 //import { useHistory } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import { Link } from "react-router-dom";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -143,7 +144,8 @@ function Destination(props) {
               </Typography>
             </CardContent>
             <CardActions>
-              <Button size="small">View</Button>
+              <Link to={`/destinations/${dest.id}`}>View</Link>
+              <a href={`/destinations/${dest.id}`}>View Destionation</a>
               <Button size="small" onClick={() => addDestination(dest.id)}>
                 Add
               </Button>

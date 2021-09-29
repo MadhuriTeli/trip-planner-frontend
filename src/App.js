@@ -20,7 +20,7 @@ import SavedPackages from "./components/UserDashboard/SavedPackages";
 import UserProfile from "./components/UserDashboard/UserProfile";
 import Cart from "./components/UserDashboard/Cart";
 import VendorProfile from "./components/VendorDashboard/VendorProfile";
-
+import SingleDestination from "./components/UserDashboard/Destinations/SingleDestination";
 function App() {
   return (
     <Router>
@@ -37,6 +37,7 @@ function App() {
         <Route path="/hotels" component={Hotels} />
         <Route path="/hotels/:id" component={SingleHotel} />
 
+        <Route exact path="/destinations/:id" component={SingleDestination} />
         <Route path="/savedHotels" component={SavedHotels} />
         <Route path="/packages" component={Packages} />
         <Route path="/VendorPackages" component={VendorPackages} />
