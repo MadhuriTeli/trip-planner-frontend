@@ -24,7 +24,6 @@ class VendorPackage extends React.Component {
   };
 
   handleClick = () => {
-    //console.log("Monika");
     console.log(this.props.id);
     const url = `${API_URL}/packages/${this.props.id}`;
     console.log(url);
