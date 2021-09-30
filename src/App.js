@@ -33,11 +33,10 @@ function App() {
         <Route path="/VendorDashboard" component={VendorDashboard} />
         <Route path="/about" component={About} />
         <Route path="/destinations" component={Destinations} />
-        {/* <Route path="/destinations/:id" component={SingleDestination} /> */}
         <Route path="/hotels" component={Hotels} />
         <Route path="/hotels/:id" component={SingleHotel} />
 
-        <Route exact path="/destinations/:id" component={SingleDestination} />
+        <Route path="/destinations/:id" component={SingleDestination} />
         <Route path="/savedHotels" component={SavedHotels} />
         <Route path="/packages" component={Packages} />
         <Route path="/VendorPackages" component={VendorPackages} />
@@ -55,4 +54,4 @@ function App() {
 }
 
 export default App;
-//merge code
+//Madhuri

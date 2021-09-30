@@ -1,25 +1,16 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-//import React from "react";
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
+import React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-const API_URL = "http://localhost:8080";
 
 class PackageDetails extends React.Component {
   constructor(props) {
     super(props);
     console.log(props);
     this.state = {
-      vendorId: props.match.params.vendorId || 'unknown'
-    }
+      vendorId: props.match.params.vendorId || "unknown",
+    };
   }
 
   /*
